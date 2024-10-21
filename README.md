@@ -6,8 +6,8 @@ Projekt realizowany w ramach kursu Programowanie aplikacji geoinformacyjnych (20
 - implementacja algorytmu Dijkstry i A*
 - wyznaczanie tras najkrótszych i najszybszych w sieci drogowej
 - dodatkowe rozszerzenie: wyznaczanie zasięgu punktów o tym samym czasie dojazdu
-- wykorzystanie danych przestrzennych (BDOT lub OSM)
-- integracja z systemem GIS (ESRI ArcGIS lub QGIS)
+- wykorzystanie danych przestrzennych
+- integracja z systemem GIS
 
 ### Wymagania:
 - Python
