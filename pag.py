@@ -1,5 +1,7 @@
 import arcpy
 import os
+from klasy import Node, Edge, Graf
+
 arcpy.env.workspace ="C:\studia\sem5\Pag\pag\pag.gdb"
 
 fc = "C:\studia\sem5\Pag\L4_1_BDOT10k__OT_SKJZ_L.shp"
