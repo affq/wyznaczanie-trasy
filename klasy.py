@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Dict, List
 
 road_classes_speed = {
     "motorway": 1,
@@ -14,7 +14,7 @@ road_classes_speed = {
 }
 
 class Wierzcholek:
-    def __init__ (self, id: str, x: float, y: float):
+    def __init__(self, id: str, x: float, y: float):
         self.id = id
         self.x = x
         self.y = y
@@ -26,7 +26,7 @@ class Wierzcholek:
             node = edge.get_end(self)
             neighbours.append((edge, node))
         return neighbours
-        
+
 class Krawedz:
     def __init__(self, id: str, from_node: Wierzcholek, to_node: Wierzcholek, length: float, road_class: str, direction: str):
         self.id = id
@@ -39,46 +39,33 @@ class Krawedz:
     def get_end(self, node: Wierzcholek):
         if self.from_node == node:
             return self.to_node
-        else:    
+        else:
             return self.from_node
-    
+
     def cost_length(self):
         return self.length
-    
+
     def cost_time(self):
         return self.length / self.road_class_speed
 
 class Graf:
     def __init__(self):
-        self.edges = []
-        self.nodes = []
-    
+        self.edges: Dict[str, Krawedz] = {}
+        self.nodes: Dict[str, Wierzcholek] = {}
+
     def add_edge(self, edge: Krawedz):
-        self.edges.append(edge)
+        self.edges[edge.id] = edge
 
-        if edge.from_node not in self.nodes:
-            self.nodes.append(edge.from_node)
-        else:
-            edge.from_node.edges.append(edge)
+        if edge.from_node.id not in self.nodes:
+            self.nodes[edge.from_node.id] = edge.from_node
+        edge.from_node.edges.append(edge)
 
-        if edge.to_node not in self.nodes:
-            self.nodes.append(edge.to_node)
-        else:
-            edge.to_node.edges.append(edge)
-    
-    def get_node_by_id(self, id: int):
-        for node in self.nodes:
-            if node.id == id:
-                return node
-        return None
-    
-    def get_edge_by_id(self, id: int):
-        for edge in self.edges:
-            if edge.id == id:
-                return edge
-        return None
-    
-    
-        
+        if edge.to_node.id not in self.nodes:
+            self.nodes[edge.to_node.id] = edge.to_node
+        edge.to_node.edges.append(edge)
 
+    def get_node_by_id(self, id: str) -> Wierzcholek:
+        return self.nodes.get(id)
 
+    def get_edge_by_id(self, id: str) -> Krawedz:
+        return self.edges.get(id)
