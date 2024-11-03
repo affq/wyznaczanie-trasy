@@ -1,16 +1,14 @@
 from typing import Dict, List
 
 road_classes_speed = {
-    "motorway": 1,
-    "trunk": 2,
-    "primary": 3,
-    "secondary": 4,
-    "tertiary": 5,
-    "unclassified": 6,
-    "residential": 7,
-    "service": 8,
-    "track": 9,
-    "pedestrian": 10,
+    "A": 140,
+    "S": 120,
+    "GP": 100,
+    "G": 80,
+    "Z": 60,
+    "L": 50,
+    "D": 40,
+    "I": 30
 }
 
 class Wierzcholek:
@@ -26,9 +24,12 @@ class Wierzcholek:
             node = edge.get_end(self)
             neighbours.append((edge, node))
         return neighbours
+    
+    def __repr__(self):
+        return f"Wierzcholek(id={self.id}, x={self.x}, y={self.y})"
 
 class Krawedz:
-    def __init__(self, id: str, from_node: Wierzcholek, to_node: Wierzcholek, length: float, road_class: str, direction: str):
+    def __init__(self, id: int, from_node: Wierzcholek, to_node: Wierzcholek, length: float, road_class: str, direction: str):
         self.id = id
         self.from_node = from_node
         self.to_node = to_node
@@ -46,7 +47,10 @@ class Krawedz:
         return self.length
 
     def cost_time(self):
-        return self.length / self.road_class_speed
+        return self.length / (self.road_class_speed * 1000 / 3600) 
+    
+    def __repr__(self):
+        return f"Krawedz(id={self.id}, from={self.from_node.id}, to={self.to_node.id}, length={self.length}, road_class={self.road_class_speed}, direction={self.direction})"
 
 class Graf:
     def __init__(self):
@@ -56,13 +60,8 @@ class Graf:
     def add_edge(self, edge: Krawedz):
         self.edges[edge.id] = edge
 
-        if edge.from_node.id not in self.nodes:
-            self.nodes[edge.from_node.id] = edge.from_node
-        edge.from_node.edges.append(edge)
-
-        if edge.to_node.id not in self.nodes:
-            self.nodes[edge.to_node.id] = edge.to_node
-        edge.to_node.edges.append(edge)
+        self.nodes.setdefault(edge.from_node.id, edge.from_node).edges.append(edge)
+        self.nodes.setdefault(edge.to_node.id, edge.to_node).edges.append(edge)
 
     def get_node_by_id(self, id: str) -> Wierzcholek:
         return self.nodes.get(id)
