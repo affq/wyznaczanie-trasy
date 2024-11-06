@@ -53,3 +53,35 @@ def bfs(graph, a, b):
                 prev[w] = u
         
     return None
+
+def extractmin(Q,d):    #zwraca wierzchołek w Q o najmniejszej wartości d
+    min = float('inf')
+    u = None
+    for v in Q:
+        if d[v] < min:
+            min = d[v]
+            u = v
+    return u
+
+def dijkstra(graph,start_id,end_id):
+    S = set()   #wierzcholki juz przetworzone
+    Q = set(graph.nodes.keys())  #wierzcholki do przetworzenia
+    
+    d = {node_id: float('inf') for node_id in graph.nodes}  #tymczasowa najkrotsza sciezka do wierzcholka
+    p = {node_id: None for node_id in graph.nodes}  #poprzednik w tymczasowej sciezce
+    
+    d[start_id] = 0
+    
+    
+    while Q:
+        u = extractmin(Q,d)
+        Q.remove(u)
+        S.add(u)
+        
+        for edge, w_node in graph.get_node_by_id(u).get_neighbours():
+           w = w_node.id
+           if d[w] > d[u] + edge.cost_length():
+               d[w] = d[u] + edge.cost_length()
+               p[w] = u
+               
+    return retrieve_path(p, start_id, end_id)
