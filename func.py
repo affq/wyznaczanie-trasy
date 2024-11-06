@@ -99,7 +99,7 @@ def dijkstra(graph,start_id,end_id):
         S.add(u)
         processed_nodes += 1
         
-        path = retrieve_path(p, start_id, end_id)
-        path_length = d[end_id]
+    path = retrieve_path(p, start_id, end_id)
+    path_length = d[end_id]
         
-        return path, path_length, neighbor_count, processed_nodes
+    return path, path_length, neighbor_count, processed_nodes
