@@ -76,12 +76,23 @@ def dijkstra(graph,start_id,end_id):
     while Q:
         u = extractmin(Q,d)
         Q.remove(u)
-        S.add(u)
+        
+        if u == end_id:
+            break
+        
         
         for edge, w_node in graph.get_node_by_id(u).get_neighbours():
            w = w_node.id
+           if w in S:
+               continue
+           
            if d[w] > d[u] + edge.cost_length():
                d[w] = d[u] + edge.cost_length()
                p[w] = u
                
+               if w not in Q:
+                   Q.add(w)
+        
+        S.add(u)
+        
     return retrieve_path(p, start_id, end_id)
