@@ -1,4 +1,5 @@
 from collections import defaultdict
+from klasy import PriorityQueue
 
 def read_graph(filename):
     f = open(filename)
@@ -31,6 +32,20 @@ def retrieve_path(prev, a, b):
     path.reverse()
     return path
 
+def retrieve_path2(prev, a, b):
+    if b not in prev:
+        return []
+    path =[]
+    current = b
+    
+    while current != a:
+        path.append(current)
+        current = prev[current]
+    
+    path.append(a)
+    path.reverse()
+    return path
+
 def bfs(graph, a, b):
     queue = []
     visited = set()
@@ -54,52 +69,30 @@ def bfs(graph, a, b):
         
     return None
 
-def extractmin(Q,d):    #zwraca wierzchołek w Q o najmniejszej wartości d
-    min = float('inf')
-    u = None
-    for v in Q:
-        if d[v] < min:
-            min = d[v]
-            u = v
-    return u
-
+# na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
 def dijkstra(graph,start_id,end_id):
-    S = set()   #wierzcholki juz przetworzone
-    Q = set([start_id])  #wierzcholki do przetworzenia
+    frontier = PriorityQueue()
+    frontier.put(start_id, 0)
+    #print(f"frontier {frontier.get_elements()}")
+    came_from = {}
+    cost_so_far = {}
+    came_from[start_id] = None
+    cost_so_far[start_id] = 0
     
-    d = {node_id: float('inf') for node_id in graph.nodes}  #tymczasowa najkrotsza sciezka do wierzcholka
-    p = {node_id: None for node_id in graph.nodes}  #poprzednik w tymczasowej sciezce
-    
-    d[start_id] = 0
-    
-    neighbor_count =0
-    processed_nodes = 0
-    
-    while Q:
-        u = extractmin(Q,d)
-        Q.remove(u)
+    while not frontier.empty():
+        current = frontier.get()
         
-        if u == end_id:
+        if current == end_id:
             break
         
-        
-        for edge, w_node in graph.get_node_by_id(u).get_neighbours():
-           w = w_node.id
-           neighbor_count += 1
-           if w in S:
-               continue
-           
-           if d[w] > d[u] + edge.cost_length():
-               d[w] = d[u] + edge.cost_length()
-               p[w] = u
-               
-               if w not in Q:
-                   Q.add(w)
-        
-        S.add(u)
-        processed_nodes += 1
-        
-        path = retrieve_path(p, start_id, end_id)
-        path_length = d[end_id]
-        
-        return path, path_length, neighbor_count, processed_nodes
+        for edge, w_node in graph.get_node_by_id(current).get_neighbours():
+            w = w_node.id
+            #print(f"Neighbor of {current}: {w}")
+            new_cost = cost_so_far[current] + edge.cost_length()
+            if w not in cost_so_far or new_cost < cost_so_far[w]:
+                cost_so_far[w] = new_cost
+                priority = new_cost
+                frontier.put(w, priority)
+                came_from[w] = current
+    
+    return came_from, cost_so_far

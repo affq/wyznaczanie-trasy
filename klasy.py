@@ -1,4 +1,5 @@
 from typing import Dict, List
+import heapq
 
 road_classes_speed = {
     "A": 140,
@@ -68,3 +69,20 @@ class Graf:
 
     def get_edge_by_id(self, id: str) -> Krawedz:
         return self.edges.get(id)
+
+
+class PriorityQueue:
+    def __init__(self):
+        self.elements = []
+    
+    def empty(self):
+        return not self.elements
+    
+    def put(self, item, priority):
+        heapq.heappush(self.elements, (priority, item))
+    
+    def get(self):
+        return heapq.heappop(self.elements)[1]
+    
+    def get_elements(self): 
+        return self.elements

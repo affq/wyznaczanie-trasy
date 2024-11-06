@@ -1,10 +1,12 @@
 import arcpy
 import os
 from klasy import Wierzcholek, Krawedz, Graf
+from func import *
 
-# arcpy.env.workspace ="C:\studia\sem5\Pag\pag\pag.gdb"
+#arcpy.env.workspace ="C:\studia\sem5\Pag\pag\pag.gdb"
 
-fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
+#fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
+fc="4krawedzie.shp"
 
 graf = Graf()
 
@@ -34,3 +36,10 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
 
 for node in graf.nodes.values():
    print(node.id, node.edges)
+   
+start_id = next(iter(graf.nodes))
+end_id = next(reversed(graf.nodes))
+came_from, cost_so_far = dijkstra(graf, start_id, end_id)
+#print(f"start_id: {start_id}, end_id: {end_id}\n came_from: {came_from} \n cost: {cost_so_far}")
+path = retrieve_path2(came_from, start_id, end_id)
+#print(f"path{path}")
