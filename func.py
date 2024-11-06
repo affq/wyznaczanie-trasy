@@ -65,13 +65,15 @@ def extractmin(Q,d):    #zwraca wierzchołek w Q o najmniejszej wartości d
 
 def dijkstra(graph,start_id,end_id):
     S = set()   #wierzcholki juz przetworzone
-    Q = set(graph.nodes.keys())  #wierzcholki do przetworzenia
+    Q = set([start_id])  #wierzcholki do przetworzenia
     
     d = {node_id: float('inf') for node_id in graph.nodes}  #tymczasowa najkrotsza sciezka do wierzcholka
     p = {node_id: None for node_id in graph.nodes}  #poprzednik w tymczasowej sciezce
     
     d[start_id] = 0
     
+    neighbor_count =0
+    processed_nodes = 0
     
     while Q:
         u = extractmin(Q,d)
@@ -83,6 +85,7 @@ def dijkstra(graph,start_id,end_id):
         
         for edge, w_node in graph.get_node_by_id(u).get_neighbours():
            w = w_node.id
+           neighbor_count += 1
            if w in S:
                continue
            
@@ -94,5 +97,9 @@ def dijkstra(graph,start_id,end_id):
                    Q.add(w)
         
         S.add(u)
+        processed_nodes += 1
         
-    return retrieve_path(p, start_id, end_id)
+        path = retrieve_path(p, start_id, end_id)
+        path_length = d[end_id]
+        
+        return path, path_length, neighbor_count, processed_nodes
