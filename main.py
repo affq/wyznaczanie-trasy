@@ -37,9 +37,14 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
 for node in graf.nodes.values():
    print(node.id, node.edges)
    
-start_id = next(iter(graf.nodes))
-end_id = next(reversed(graf.nodes))
-came_from, cost_so_far = dijkstra(graf, start_id, end_id)
-#print(f"start_id: {start_id}, end_id: {end_id}\n came_from: {came_from} \n cost: {cost_so_far}")
-path = retrieve_path2(came_from, start_id, end_id)
-#print(f"path{path}")
+# start_id = next(iter(graf.nodes))
+# end_id = next(reversed(graf.nodes))
+start_id = "471406,575311"
+end_id = "471332,575482"
+
+came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
+length_a_star = cost_so_far[end_id]
+print(f"Length: {length_a_star} m")
+came_from,cost_so_far = a_star(graf, start_id, end_id,'time')
+time = cost_so_far[end_id]
+print(f"Time: {time} s")
