@@ -30,13 +30,14 @@ class Wierzcholek:
         return f"Wierzcholek(id={self.id}, x={self.x}, y={self.y})"
 
 class Krawedz:
-    def __init__(self, id: int, from_node: Wierzcholek, to_node: Wierzcholek, length: float, road_class: str, direction: str):
+    def __init__(self, id: int, from_node: Wierzcholek, to_node: Wierzcholek, length: float, road_class: str, direction: str, wkt: str):
         self.id = id
         self.from_node = from_node
         self.to_node = to_node
         self.length = length
         self.road_class_speed = road_classes_speed[road_class]
         self.direction = direction
+        self.wkt = wkt
 
     def get_end(self, node: Wierzcholek):
         if self.from_node == node:

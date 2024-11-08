@@ -5,8 +5,13 @@ from func import *
 
 #arcpy.env.workspace ="C:\studia\sem5\Pag\pag\pag.gdb"
 
-#fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
-fc="4krawedzie.shp"
+fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
+# fc=r"shp\4krawedzie.shp"
+
+#set overwrite true
+
+arcpy.env.overwriteOutput = True
+
 
 graf = Graf()
 
@@ -14,6 +19,7 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
     for row in cursor:
         startPoint = row[1].firstPoint
         endPoint = row[1].lastPoint
+        geometry = row[1].WKT
 
         x1 = startPoint.X
         y1 = startPoint.Y
@@ -31,11 +37,11 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
 
         start = Wierzcholek(start_id, x1, y1)
         end = Wierzcholek(end_id, x2, y2)
-        edge = Krawedz(edge_id, start, end, length, road_class, direction)
+        edge = Krawedz(edge_id, start, end, length, road_class, direction, geometry)
         graf.add_edge(edge)
 
-for node in graf.nodes.values():
-   print(node.id, node.edges)
+# for node in graf.nodes.values():
+#    print(node.id, node.edges)
    
 # start_id = next(iter(graf.nodes))
 # end_id = next(reversed(graf.nodes))
@@ -74,10 +80,8 @@ for i in range(len(path)-1):
  
 with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["SHAPE@"]) as cursor:
     for edge in edges_list:
-        start_point = arcpy.Point(edge.from_node.x, edge.from_node.y) 
-        end_point = arcpy.Point(edge.to_node.x, edge.to_node.y)
-        polyline = arcpy.Polyline(arcpy.Array([start_point, end_point])) 
-        cursor.insertRow([polyline])
-
+        print(edge)
+        geometry = arcpy.FromWKT(edge.wkt)
+        cursor.insertRow([geometry])
 
 print("SHP done")
