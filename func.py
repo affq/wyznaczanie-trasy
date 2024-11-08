@@ -103,7 +103,7 @@ def dijkstra(graph,start_id,end_id):
 def heurystyka(start_id, end_id,option):
     start = (start_id.split(','))
     end = (end_id.split(','))
-    euklides_distance = ((int(start[0]) - int(end[0]))**2 + (int(start[1]) - int(end[1]))**2)**0.5
+    euklides_distance = ((int(start[0]) - int(end[0]))*(int(start[0]) - int(end[0])) + (int(start[1]) - int(end[1]))*(int(start[1]) - int(end[1])))**0.5
     if option == 'distance':
         return euklides_distance
     else:
