@@ -3,7 +3,7 @@ import os
 from klasy import Wierzcholek, Krawedz, Graf
 from func import *
 
-#arcpy.env.workspace ="C:\studia\sem5\Pag\pag\pag.gdb"
+arcpy.env.workspace =r"C:\Users\adria\OneDrive\Dokumenty\ArcGIS\Projects\MyProject13\MyProject13.gdb"
 
 fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
 # fc=r"shp\4krawedzie.shp"
@@ -40,21 +40,18 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
         edge = Krawedz(edge_id, start, end, length, road_class, direction, geometry)
         graf.add_edge(edge)
 
-# for node in graf.nodes.values():
-#    print(node.id, node.edges)
+with open('nodes.txt', 'w') as f:
+    for node in graf.nodes.values():
+        f.write(f"{node.id}\n")
    
 # start_id = next(iter(graf.nodes))
 # end_id = next(reversed(graf.nodes))
-start_id = "471406,575311"
-end_id = "471332,575482"
+start_id = "478439,572393"
+end_id = "474561,570170"
 
 came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
 length_a_star = cost_so_far[end_id]
 path = retrieve_path2(came_from, start_id, end_id)
-# print(f"Length: {length_a_star} m")
-# came_from,cost_so_far = a_star(graf, start_id, end_id,'time')
-# time = cost_so_far[end_id]
-# print(f"Time: {time} s")
 
 #----------wizualizacja----------------
 spatial_reference = arcpy.Describe(fc).spatialReference
