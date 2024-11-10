@@ -1,18 +1,10 @@
 import arcpy
-import os
 from klasy import Wierzcholek, Krawedz, Graf
-from func import *
-
-arcpy.env.workspace =r"C:\Users\adria\OneDrive\Dokumenty\ArcGIS\Projects\MyProject13\MyProject13.gdb"
-
-fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
-# fc=r"shp\4krawedzie.shp"
-
-#set overwrite true
+from func import a_star, retrieve_path2
 
 arcpy.env.overwriteOutput = True
 
-
+fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
 graf = Graf()
 
 with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as cursor:
@@ -44,10 +36,8 @@ with open('nodes.txt', 'w') as f:
     for node in graf.nodes.values():
         f.write(f"{node.id}\n")
    
-# start_id = next(iter(graf.nodes))
-# end_id = next(reversed(graf.nodes))
-start_id = "478439,572393"
-end_id = "480078,570430"
+start_id = graf.snap(478439, 572393).id
+end_id = graf.snap(480078, 570430).id
 
 came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
 length_a_star = cost_so_far[end_id]

@@ -1,6 +1,8 @@
 from collections import defaultdict
-from klasy import *
+import math
 
+def distance(x1, y1, x2, y2):
+    return math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))
 
 def read_graph(filename):
     f = open(filename)
@@ -73,6 +75,7 @@ def bfs(graph, a, b):
 # na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
 
 def dijkstra(graph,start_id,end_id):
+    from klasy import PriorityQueue
     frontier = PriorityQueue()
     frontier.put(start_id, 0)
     #print(f"frontier {frontier.get_elements()}")
@@ -101,9 +104,10 @@ def dijkstra(graph,start_id,end_id):
 
 
 def heurystyka(start_id, end_id,option):
+    from klasy import road_classes_speed
     start = (start_id.split(','))
     end = (end_id.split(','))
-    euklides_distance = ((int(start[0]) - int(end[0]))*(int(start[0]) - int(end[0])) + (int(start[1]) - int(end[1]))*(int(start[1]) - int(end[1])))**0.5
+    euklides_distance = distance(int(start[0]), int(start[1]), int(end[0]), int(end[1]))
     if option == 'distance':
         return euklides_distance
     else:
@@ -113,6 +117,7 @@ def heurystyka(start_id, end_id,option):
     
 # na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
 def a_star(graph, start_id, end_id,option):
+    from klasy import PriorityQueue
     frontier = PriorityQueue()
     frontier.put(start_id, 0)
     came_from = {}

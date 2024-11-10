@@ -1,5 +1,6 @@
 from typing import Dict, List
 import heapq
+from func import distance
 
 road_classes_speed = {
     "A": 140,
@@ -70,7 +71,16 @@ class Graf:
 
     def get_edge_by_id(self, id: str) -> Krawedz:
         return self.edges.get(id)
-
+    
+    def snap(self, x: float, y: float) -> Wierzcholek:
+        closest_node = None
+        min_dist = float('inf')
+        for node in self.nodes.values():
+            dist = distance(x, y, node.x, node.y)
+            if dist < min_dist:
+                min_dist = dist
+                closest_node = node 
+        return closest_node
 
 class PriorityQueue:
     def __init__(self):
