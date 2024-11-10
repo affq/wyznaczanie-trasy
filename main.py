@@ -47,7 +47,7 @@ with open('nodes.txt', 'w') as f:
 # start_id = next(iter(graf.nodes))
 # end_id = next(reversed(graf.nodes))
 start_id = "478439,572393"
-end_id = "474561,570170"
+end_id = "480078,570430"
 
 came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
 length_a_star = cost_so_far[end_id]
@@ -74,11 +74,11 @@ for i in range(len(path)-1):
         print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
         break
     
- 
-with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["SHAPE@"]) as cursor:
-    for edge in edges_list:
+arcpy.AddField_management(f"{output_folder}/{output_name}", "NR", "LONG")
+with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
+    for i, edge in enumerate(edges_list):
         print(edge)
         geometry = arcpy.FromWKT(edge.wkt)
-        cursor.insertRow([geometry])
+        cursor.insertRow([i, geometry])
 
 print("SHP done")

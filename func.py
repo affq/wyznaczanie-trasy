@@ -122,6 +122,7 @@ def a_star(graph, start_id, end_id,option):
     
     while not frontier.empty():
         current = frontier.get()
+        print(current)
         
         if current == end_id:
             break
