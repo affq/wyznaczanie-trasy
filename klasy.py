@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 import heapq
 from func import distance
 
@@ -20,14 +20,17 @@ class Wierzcholek:
         self.y = y
         self.edges = []
 
-    def get_neighbours(self):
+    def get_neighbours(self) -> List[Tuple["Krawedz", "Wierzcholek"]]:
+        """
+        Zwraca sąsiadów wierzchołka w postaci listy tupli (krawędź, wierzchołek).
+        """
         neighbours = []
         for edge in self.edges:
             node = edge.get_end(self)
             neighbours.append((edge, node))
         return neighbours
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Wierzcholek(id={self.id}, x={self.x}, y={self.y})"
 
 class Krawedz:
@@ -40,19 +43,28 @@ class Krawedz:
         self.direction = direction
         self.wkt = wkt
 
-    def get_end(self, node: Wierzcholek):
+    def get_end(self, node: Wierzcholek) -> Wierzcholek:
+        """
+        Zwraca wierzchołek, będący drugim końcem krawędzi.
+        """
         if self.from_node == node:
             return self.to_node
         else:
             return self.from_node
 
-    def cost_length(self):
+    def cost_length(self) -> float:
+        """
+        Zwraca koszt krawędzi w postaci długości (w metrach).
+        """
         return self.length
 
-    def cost_time(self):
+    def cost_time(self) -> float:
+        """
+        Zwraca koszt krawędzi w postaci czasu (w sekundach), jaki zajmuje przejście krawędzi.
+        """
         return self.length / (self.road_class_speed * 1000 / 3600) 
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Krawedz(id={self.id}, from={self.from_node.id}, to={self.to_node.id}, length={self.length}, road_class={self.road_class_speed}, direction={self.direction})"
 
 class Graf:
@@ -60,19 +72,28 @@ class Graf:
         self.edges: Dict[str, Krawedz] = {}
         self.nodes: Dict[str, Wierzcholek] = {}
 
-    def add_edge(self, edge: Krawedz):
+    def add_edge(self, edge: Krawedz) -> None:
         self.edges[edge.id] = edge
 
         self.nodes.setdefault(edge.from_node.id, edge.from_node).edges.append(edge)
         self.nodes.setdefault(edge.to_node.id, edge.to_node).edges.append(edge)
 
     def get_node_by_id(self, id: str) -> Wierzcholek:
+        """
+        Zwraca wierzchołek z grafu o danym id.
+        """
         return self.nodes.get(id)
 
     def get_edge_by_id(self, id: str) -> Krawedz:
+        """
+        Zwraca krawędź z grafu o danym id.
+        """
         return self.edges.get(id)
     
     def snap(self, x: float, y: float) -> Wierzcholek:
+        """
+        Zwraca wierzchołek w grafie, który jest najbliższy współrzędnych x, y.
+        """
         closest_node = None
         min_dist = float('inf')
         for node in self.nodes.values():
@@ -89,11 +110,11 @@ class PriorityQueue:
     def empty(self):
         return not self.elements
     
-    def put(self, item, priority):
+    def put(self, item, priority) -> None:
         heapq.heappush(self.elements, (priority, item))
     
-    def get(self):
+    def get(self) -> Tuple[float, object]:
         return heapq.heappop(self.elements)[1]
     
-    def get_elements(self): 
+    def get_elements(self) -> List[Tuple[float, object]]:
         return self.elements

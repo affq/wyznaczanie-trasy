@@ -1,39 +1,10 @@
-from collections import defaultdict
 import math
 
-def distance(x1, y1, x2, y2):
+def distance(x1: float, y1: float, x2: float, y2: float) -> float:
+    """
+    Zwraca odległość między dwoma punktami (x1, y1) i (x2, y2).
+    """
     return math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))
-
-def read_graph(filename):
-    f = open(filename)
-    g = defaultdict(list)
-
-    for line in f:
-        if not line.startswith('#'):
-            e = [int(x) for x in line.split()]
-            g[e[0]].append(e[1])
-    return g
-
-def read_graph_undirected(filename):
-    f = open(filename)
-    g = defaultdict(list)
-
-    for line in f:
-        if not line.startswith('#'):
-            e = [int(x) for x in line.split()]
-            g[e[0]].append(e[1])
-            g[e[1]].append(e[0])
-    return g
-
-def retrieve_path(prev, a, b):
-    path = [b]
-
-    while b != a:
-        b = prev[b]
-        path.append(b)
-
-    path.reverse()
-    return path
 
 def retrieve_path2(prev, a, b):
     if b not in prev:
@@ -48,29 +19,6 @@ def retrieve_path2(prev, a, b):
     path.append(a)
     path.reverse()
     return path
-
-def bfs(graph, a, b):
-    queue = []
-    visited = set()
-    prev = {}
-
-    queue.append(a)
-    visited.add(a)
-    prev[a] = None
-
-    while queue:
-        u = queue.pop(0)
-
-        if u == b:
-            return retrieve_path(prev, a, b)
-
-        for w in graph[u]:
-            if w not in visited:
-                queue.append(w)
-                visited.add(w)
-                prev[w] = u
-        
-    return None
 
 # na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
 

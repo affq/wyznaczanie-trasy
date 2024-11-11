@@ -38,6 +38,7 @@ with open('nodes.txt', 'w') as f:
    
 start_id = graf.snap(478439, 572393).id
 end_id = graf.snap(480078, 570430).id
+#dlugosciszerokosc?
 
 came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
 length_a_star = cost_so_far[end_id]
@@ -49,6 +50,8 @@ spatial_reference = arcpy.Describe(fc).spatialReference
 output_folder= "shp"
 output_name = "path.shp"
 arcpy.management.CreateFeatureclass(output_folder, output_name, "POLYLINE",spatial_reference=spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name}", "NR", "FLOAT")
+
 edges_list = []
 for i in range(len(path)-1):
     start_node = path[i] 
@@ -64,7 +67,6 @@ for i in range(len(path)-1):
         print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
         break
     
-arcpy.AddField_management(f"{output_folder}/{output_name}", "NR", "LONG")
 with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
     for i, edge in enumerate(edges_list):
         print(edge)
