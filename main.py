@@ -26,10 +26,13 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
 
         start_id = str(int(x1)) + "," + str(int(y1))
         end_id = str(int(x2)) + "," + str(int(y2))
+        
+        start_node = graf.add_node(start_id, x1, y1)
+        end_node = graf.add_node(end_id, x2, y2)
 
         start = Wierzcholek(start_id, x1, y1)
         end = Wierzcholek(end_id, x2, y2)
-        edge = Krawedz(edge_id, start, end, length, road_class, direction, geometry)
+        edge = Krawedz(edge_id, start_node, end_node, length, road_class, direction, geometry)
         graf.add_edge(edge)
 
 with open('nodes.txt', 'w') as f:

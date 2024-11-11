@@ -1,5 +1,4 @@
 from typing import Dict, List, Tuple
-import heapq
 from func import distance
 
 road_classes_speed = {
@@ -71,6 +70,11 @@ class Graf:
     def __init__(self):
         self.edges: Dict[str, Krawedz] = {}
         self.nodes: Dict[str, Wierzcholek] = {}
+        
+    def add_node(self, id: str, x: float, y: float) -> Wierzcholek:
+        if id not in self.nodes:
+            self.nodes[id] = Wierzcholek(id, x, y)
+        return self.nodes[id]
 
     def add_edge(self, edge: Krawedz) -> None:
         self.edges[edge.id] = edge
@@ -103,18 +107,3 @@ class Graf:
                 closest_node = node 
         return closest_node
 
-class PriorityQueue:
-    def __init__(self):
-        self.elements = []
-    
-    def empty(self):
-        return not self.elements
-    
-    def put(self, item, priority) -> None:
-        heapq.heappush(self.elements, (priority, item))
-    
-    def get(self) -> Tuple[float, object]:
-        return heapq.heappop(self.elements)[1]
-    
-    def get_elements(self) -> List[Tuple[float, object]]:
-        return self.elements

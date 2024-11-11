@@ -64,39 +64,38 @@ def heurystyka(start_id, end_id,option):
         return time
     
 # na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
-def a_star(graph, start_id, end_id,option):
-    from klasy import PriorityQueue
+def a_star(graph, start_id, goal_id, option):
+    start_node = graph.get_node_by_id(start_id)
+    goal_node = graph.get_node_by_id(goal_id)
+    
+    if start_node is None or goal_node is None:
+        raise ValueError("Początkowy lub końcowy węzeł nie istnieje w grafie.")
+    
+    from queue import PriorityQueue
     frontier = PriorityQueue()
-    frontier.put(start_id, 0)
-    came_from = {}
-    cost_so_far = {}
-    came_from[start_id] = None
-    cost_so_far[start_id] = 0
+    frontier.put((0, start_node))
+    
+    came_from = {start_id: None}
+    cost_so_far = {start_id: 0}
     
     while not frontier.empty():
-        current = frontier.get()
-        print(current)
+        _, current = frontier.get()
         
-        if current == end_id:
+        if current.id == goal_id:
             break
         
-        for edge, w_node in graph.get_node_by_id(current).get_neighbours():
-            w = w_node.id
-            
+        for edge, neighbor in current.get_neighbours():
+            # Oblicz koszt przejścia do sąsiada
             if option == 'distance':
-                new_cost = cost_so_far[current] + edge.cost_length()
+                new_cost = cost_so_far[current.id] + edge.cost_length()
             else:
-                new_cost = cost_so_far[current] + edge.cost_time()  
+                new_cost = cost_so_far[current.id] + edge.cost_time()
             
-            if w not in cost_so_far or new_cost < cost_so_far[w]:
-                cost_so_far[w] = new_cost
-                
-                if option == 'distance':
-                    priority = new_cost + heurystyka(w, end_id,'distance')
-                else:
-                    priority = new_cost + heurystyka(w, end_id,'time')
-                
-                frontier.put(w, priority)
-                came_from[w] = current
+            # Jeśli nowy koszt jest niższy niż poprzednio zapisany, aktualizujemy koszty
+            if neighbor.id not in cost_so_far or new_cost < cost_so_far[neighbor.id]:
+                cost_so_far[neighbor.id] = new_cost
+                priority = new_cost + heurystyka(neighbor.id, goal_id, option)
+                frontier.put((priority, neighbor))
+                came_from[neighbor.id] = current.id
     
     return came_from, cost_so_far
