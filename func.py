@@ -85,17 +85,26 @@ def a_star(graph, start_id, goal_id, option):
             break
         
         for edge, neighbor in current.get_neighbours():
-            # Oblicz koszt przejścia do sąsiada
-            if option == 'distance':
-                new_cost = cost_so_far[current.id] + edge.cost_length()
-            else:
-                new_cost = cost_so_far[current.id] + edge.cost_time()
             
-            # Jeśli nowy koszt jest niższy niż poprzednio zapisany, aktualizujemy koszty
-            if neighbor.id not in cost_so_far or new_cost < cost_so_far[neighbor.id]:
-                cost_so_far[neighbor.id] = new_cost
-                priority = new_cost + heurystyka(neighbor.id, goal_id, option)
-                frontier.put((priority, neighbor))
-                came_from[neighbor.id] = current.id
+            if edge.direction == 0: # Droga jest przejezda w obu kierunkach
+                go = True
+            elif edge.direction == 1 and edge.from_node == current: # Droga jest przejezdna tylko w kierunku  from_node -> to_node
+                go = True
+            elif edge.direction == 2 and edge.to_node == current: # Droga jest przejezdna tylko w kierunku to_node -> from_node
+                go = True
+            else:
+                go = False
+                
+            if go:
+                if option == 'distance':
+                    new_cost = cost_so_far[current.id] + edge.cost_length()
+                else:
+                    new_cost = cost_so_far[current.id] + edge.cost_time()
+                
+                if neighbor.id not in cost_so_far or new_cost < cost_so_far[neighbor.id]:
+                    cost_so_far[neighbor.id] = new_cost
+                    priority = new_cost + heurystyka(neighbor.id, goal_id, option)
+                    frontier.put((priority, neighbor))
+                    came_from[neighbor.id] = current.id
     
     return came_from, cost_so_far
