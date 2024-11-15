@@ -21,7 +21,6 @@ def retrieve_path(prev, a, b):
     return path
 
 # na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
-
 def dijkstra(graph,start_id,end_id):
     from klasy import PriorityQueue
     frontier = PriorityQueue()
@@ -51,10 +50,10 @@ def dijkstra(graph,start_id,end_id):
     return came_from, cost_so_far
 
 
-def heurystyka(start_id, end_id,option):
+def heurystyka(start_node, end_node, option):
     from klasy import road_classes_speed
-    start = (start_id.split(','))
-    end = (end_id.split(','))
+    start = (start_node.x, start_node.y)
+    end = (end_node.x, end_node.y)
     euklides_distance = distance(int(start[0]), int(start[1]), int(end[0]), int(end[1]))
     if option == 'distance':
         return euklides_distance
@@ -62,12 +61,8 @@ def heurystyka(start_id, end_id,option):
         speed_m_s = road_classes_speed['A'] * 1000 / 3600
         time = euklides_distance / speed_m_s
         return time
-    
-# na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
-def a_star(graph, start_id, goal_id, option):
-    start_node = graph.get_node_by_id(start_id)
-    goal_node = graph.get_node_by_id(goal_id)
-    
+
+def a_star(graph, start_node, goal_node, option):
     if start_node is None or goal_node is None:
         raise ValueError("Początkowy lub końcowy węzeł nie istnieje w grafie.")
     
@@ -75,17 +70,16 @@ def a_star(graph, start_id, goal_id, option):
     frontier = PriorityQueue()
     frontier.put((0, start_node))
     
-    came_from = {start_id: None}
-    cost_so_far = {start_id: 0}
+    came_from = {start_node.id: None}
+    cost_so_far = {start_node.id: 0}
     
     while not frontier.empty():
         _, current = frontier.get()
         
-        if current.id == goal_id:
+        if current.id == goal_node.id:
             break
         
         for edge, neighbor in current.get_neighbours():
-            
             if edge.direction == 0: # Droga jest przejezda w obu kierunkach
                 go = True
             elif edge.direction == 1 and edge.from_node == current: # Droga jest przejezdna tylko w kierunku  from_node -> to_node
@@ -103,7 +97,7 @@ def a_star(graph, start_id, goal_id, option):
                 
                 if neighbor.id not in cost_so_far or new_cost < cost_so_far[neighbor.id]:
                     cost_so_far[neighbor.id] = new_cost
-                    priority = new_cost + heurystyka(neighbor.id, goal_id, option)
+                    priority = new_cost + heurystyka(neighbor, goal_node, option)
                     frontier.put((priority, neighbor))
                     came_from[neighbor.id] = current.id
     

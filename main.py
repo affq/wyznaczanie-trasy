@@ -39,12 +39,12 @@ with open('nodes.txt', 'w') as f:
     for node in graf.nodes.values():
         f.write(f"{node.id}\n")
    
-start_id = graf.snap(478439, 572393).id
-end_id = graf.snap(480078, 570430).id
+start_point = graf.snap(474638, 572636)
+end_point = graf.snap(471582, 576616)
 
-came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
-length_a_star = cost_so_far[end_id]
-path = retrieve_path(came_from, start_id, end_id)
+came_from, cost_so_far = a_star(graf, start_point, end_point,'distance')
+length_a_star = cost_so_far[end_point.id]
+path = retrieve_path(came_from, start_point.id, end_point.id)
 
 #----------wizualizacja----------------
 spatial_reference = arcpy.Describe(fc).spatialReference
