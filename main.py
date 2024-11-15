@@ -1,10 +1,10 @@
 import arcpy
 from klasy import Wierzcholek, Krawedz, Graf
-from func import a_star, retrieve_path2
+from func import a_star, retrieve_path
 
 arcpy.env.overwriteOutput = True
 
-fc = "skjz\L4_1_BDOT10k__OT_SKJZ_L.shp"
+fc = "skjz\direction_calosc_0.shp"
 graf = Graf()
 
 with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as cursor:
@@ -41,11 +41,10 @@ with open('nodes.txt', 'w') as f:
    
 start_id = graf.snap(478439, 572393).id
 end_id = graf.snap(480078, 570430).id
-#dlugosciszerokosc?
 
 came_from, cost_so_far = a_star(graf, start_id, end_id,'distance')
 length_a_star = cost_so_far[end_id]
-path = retrieve_path2(came_from, start_id, end_id)
+path = retrieve_path(came_from, start_id, end_id)
 
 #----------wizualizacja----------------
 spatial_reference = arcpy.Describe(fc).spatialReference
