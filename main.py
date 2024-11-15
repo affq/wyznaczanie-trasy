@@ -1,9 +1,8 @@
 import arcpy
 from klasy import Wierzcholek, Krawedz, Graf
-from func import a_star, retrieve_path
+from func import a_star, retrieve_path, create_reachability_map
 
 arcpy.env.overwriteOutput = True
-
 fc = "skjz\direction_calosc_0.shp"
 graf = Graf()
 
@@ -42,7 +41,7 @@ with open('nodes.txt', 'w') as f:
 start_point = graf.snap(474638, 572636)
 end_point = graf.snap(471582, 576616)
 
-came_from, cost_so_far = a_star(graf, start_point, end_point,'distance')
+came_from, cost_so_far = a_star(graf, start_point, end_point,'x')
 length_a_star = cost_so_far[end_point.id]
 path = retrieve_path(came_from, start_point.id, end_point.id)
 
@@ -76,3 +75,16 @@ with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) a
         cursor.insertRow([i, geometry])
 
 print("SHP done")
+
+output_name = "points.shp"
+
+arcpy.management.CreateFeatureclass(output_folder, output_name, "POINT",spatial_reference=spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name}", "TIME", "FLOAT")
+
+reachability_map = create_reachability_map(graf, start_point.id, 900)
+print("Węzły, do których można dotrzeć w maksymalnym czasie:")
+
+with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["TIME", "SHAPE@"]) as cursor:
+    for node in reachability_map:
+        print(node)
+        cursor.insertRow([reachability_map[node], arcpy.PointGeometry(arcpy.Point(node.split(",")[0], node.split(",")[1]), spatial_reference)])

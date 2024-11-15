@@ -9,7 +9,7 @@ road_classes_speed = {
     "Z": 60,
     "L": 50,
     "D": 40,
-    "I": 30
+    "I": 30,
 }
 
 class Wierzcholek:

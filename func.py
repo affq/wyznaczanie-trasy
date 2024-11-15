@@ -1,4 +1,5 @@
 import math
+from queue import PriorityQueue
 
 def distance(x1: float, y1: float, x2: float, y2: float) -> float:
     """
@@ -7,6 +8,9 @@ def distance(x1: float, y1: float, x2: float, y2: float) -> float:
     return math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))
 
 def retrieve_path(prev, a, b):
+    """
+    Zwraca ścieżkę w postaci listy nodów od punktu A do punktu B.
+    """
     if b not in prev:
         return []
     path = []
@@ -20,12 +24,9 @@ def retrieve_path(prev, a, b):
     path.reverse()
     return path
 
-# na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-dijkstra
 def dijkstra(graph,start_id,end_id):
-    from klasy import PriorityQueue
     frontier = PriorityQueue()
     frontier.put(start_id, 0)
-    #print(f"frontier {frontier.get_elements()}")
     came_from = {}
     cost_so_far = {}
     came_from[start_id] = None
@@ -66,7 +67,6 @@ def a_star(graph, start_node, goal_node, option):
     if start_node is None or goal_node is None:
         raise ValueError("Początkowy lub końcowy węzeł nie istnieje w grafie.")
     
-    from queue import PriorityQueue
     frontier = PriorityQueue()
     frontier.put((0, start_node))
     
@@ -102,3 +102,46 @@ def a_star(graph, start_node, goal_node, option):
                     came_from[neighbor.id] = current.id
     
     return came_from, cost_so_far
+
+def create_reachability_map(graph, start_node_id, max_time):
+    """
+    Tworzy mapę zasięgów, które można osiągnąć w określonym maksymalnym czasie z wybranego wierzchołka.
+    
+    :param graph: Graf, w którym znajdują się węzły i krawędzie.
+    :param start_node_id: Identyfikator początkowego wierzchołka.
+    :param max_time: Maksymalny czas, jaki możemy przeznaczyć na podróż (w sekundach).
+    :return: Słownik z węzłami i czasem potrzebnym do dotarcia do nich, ograniczony do max_time.
+    """
+    frontier = PriorityQueue()
+    frontier.put((0, start_node_id))
+    time_to_reach = {start_node_id: 0}
+    
+    while not frontier.empty():
+        current_time, current_id = frontier.get()
+        
+        # Jeśli czas dotarcia do obecnego wierzchołka przekracza max_time, pomijamy go
+        if current_time > max_time:
+            continue
+        
+        current_node = graph.get_node_by_id(current_id)
+        
+        for edge, neighbor in current_node.get_neighbours():
+            if edge.direction == 0:  # Droga jest przejezdna w obu kierunkach
+                go = True
+            elif edge.direction == 1 and edge.from_node == current_node:  # Kierunek from_node -> to_node
+                go = True
+            elif edge.direction == 2 and edge.to_node == current_node:  # Kierunek to_node -> from_node
+                go = True
+            else:
+                go = False
+            
+            if go:
+                travel_time = edge.cost_time()
+                new_time = current_time + travel_time
+                
+                if neighbor.id not in time_to_reach or new_time < time_to_reach[neighbor.id]:
+                    time_to_reach[neighbor.id] = new_time
+                    frontier.put((new_time, neighbor.id))
+    
+    # Zwracamy tylko węzły, do których można dotrzeć w max_time
+    return {node_id: time for node_id, time in time_to_reach.items() if time <= max_time}
