@@ -1,9 +1,12 @@
 import arcpy
+import os
 from klasy import Wierzcholek, Krawedz, Graf
 from func import a_star, retrieve_path, create_reachability_map
 
 arcpy.env.overwriteOutput = True
-fc = "skjz\direction_calosc_0.shp"
+warstwa_punktowa = arcpy.GetParameterAsText(0)
+fc = arcpy.GetParameterAsText(1)
+# fc = "skjz\direction_calosc_0.shp"
 graf = Graf()
 
 with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as cursor:
@@ -33,13 +36,32 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
         end = Wierzcholek(end_id, x2, y2)
         edge = Krawedz(edge_id, start_node, end_node, length, road_class, direction, geometry)
         graf.add_edge(edge)
+        
+with arcpy.da.SearchCursor(warstwa_punktowa, ['SHAPE@X','SHAPE@Y']) as cursor:
+    arcpy.AddMessage(cursor)
+    points =[]
+    for row in cursor:
+        x, y = row[0], row[1]
+        points.append((x,y))
 
+if len(points) == 2:
+    start_x, start_y = points[0]
+    end_x, end_y = points[1]
+
+    start_point = graf.snap(start_x, start_y)
+    end_point = graf.snap(end_x, end_y)
+
+    arcpy.AddMessage(f"Start Point: {start_point}")
+    arcpy.AddMessage(f"End Point: {end_point}")
+else:
+    arcpy.AddMessage("W warstwie punktowej powinny znajdować się 2 punkty !")
+    
 with open('nodes.txt', 'w') as f:
     for node in graf.nodes.values():
         f.write(f"{node.id}\n")
    
-start_point = graf.snap(474638, 572636)
-end_point = graf.snap(471582, 576616)
+# start_point = graf.snap(474638, 572636)
+# end_point = graf.snap(471582, 576616)
 
 came_from, cost_so_far = a_star(graf, start_point, end_point,'x')
 length_a_star = cost_so_far[end_point.id]
@@ -66,6 +88,8 @@ for i in range(len(path)-1):
             break
     if not found_edge:
         print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
+        arcpy.AddMessage(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
+
         break
     
 with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
@@ -75,6 +99,15 @@ with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) a
         cursor.insertRow([i, geometry])
 
 print("SHP done")
+
+arcpy.AddMessage("Wygenerowano plik SHP")
+script_path = os.path.abspath(__file__)
+script_dir = os.path.dirname(script_path)
+aprx = arcpy.mp.ArcGISProject("CURRENT")  # bieżący projekt ArcGIS
+map_obj = aprx.listMaps()[0]  # pierwsza mapa w projekcie
+output_path = os.path.join(script_dir,output_folder, output_name)
+map_obj.addDataFromPath(output_path)  # dodanie warstwy
+
 
 output_name = "points.shp"
 
