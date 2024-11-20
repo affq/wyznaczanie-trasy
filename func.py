@@ -145,3 +145,39 @@ def create_reachability_map(graph, start_node_id, max_time):
     
     # Zwracamy tylko węzły, do których można dotrzeć w max_time
     return {node_id: time for node_id, time in time_to_reach.items() if time <= max_time}
+
+def create_shp_from_path(graf,path, output_folder, output_name, spatial_reference):
+    import arcpy
+    arcpy.management.CreateFeatureclass(output_folder, output_name, "POLYLINE",spatial_reference=spatial_reference)
+    arcpy.AddField_management(f"{output_folder}/{output_name}", "NR", "FLOAT")
+
+    edges_list = []
+    for i in range(len(path)-1):
+        start_node = path[i] 
+        end_node = path[i + 1] 
+        found_edge = False
+        
+        for edge in graf.edges.values():
+            if (edge.from_node.id == start_node and edge.to_node.id == end_node) or (edge.from_node.id == end_node and edge.to_node.id == start_node):
+                edges_list.append(edge)
+                found_edge = True
+                break
+        if not found_edge:
+            print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
+            arcpy.AddMessage(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
+            break
+        
+    with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
+        for i, edge in enumerate(edges_list):
+            # print(edge)
+            geometry = arcpy.FromWKT(edge.wkt)
+            cursor.insertRow([i, geometry])
+
+    arcpy.AddMessage("Wygenerowano plik SHP")
+    
+def add_shp_to_map(path):
+    import arcpy
+    aprx = arcpy.mp.ArcGISProject("CURRENT")  # Uzyskanie bieżącego projektu ArcGIS
+    map_obj = aprx.listMaps()[0]  # Pobranie pierwszej mapy w projekcie
+    map_obj.addDataFromPath(path)  # Dodanie wygenerowanej warstwy do mapy
+    arcpy.AddMessage(f"Dodano plik SHP do mapy: {path}")

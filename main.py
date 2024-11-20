@@ -1,7 +1,7 @@
 import arcpy
 import os
 from klasy import Wierzcholek, Krawedz, Graf
-from func import a_star, retrieve_path, create_reachability_map
+from func import a_star, retrieve_path, create_reachability_map,add_shp_to_map,create_shp_from_path
 
 arcpy.env.overwriteOutput = True
 warstwa_punktowa = arcpy.GetParameterAsText(0)
@@ -63,50 +63,28 @@ with open('nodes.txt', 'w') as f:
 # start_point = graf.snap(474638, 572636)
 # end_point = graf.snap(471582, 576616)
 
-came_from, cost_so_far = a_star(graf, start_point, end_point,'x')
-length_a_star = cost_so_far[end_point.id]
-path = retrieve_path(came_from, start_point.id, end_point.id)
+came_from_distance, cost_so_far_distance = a_star(graf, start_point, end_point, 'distance')
+length_a_star_distance = cost_so_far_distance[end_point.id]
+path_distance = retrieve_path(came_from_distance, start_point.id, end_point.id)
+
+came_from_time, cost_so_far_time = a_star(graf, start_point, end_point, 'time')
+length_a_star_time = cost_so_far_time[end_point.id]
+path_time = retrieve_path(came_from_time, start_point.id, end_point.id)
 
 #----------wizualizacja----------------
 spatial_reference = arcpy.Describe(fc).spatialReference
-
 output_folder= "shp"
-output_name = "path.shp"
-arcpy.management.CreateFeatureclass(output_folder, output_name, "POLYLINE",spatial_reference=spatial_reference)
-arcpy.AddField_management(f"{output_folder}/{output_name}", "NR", "FLOAT")
+output_name_distance = "path_distance.shp"
+output_name_time = "path_time.shp"
+create_shp_from_path(graf,path_distance, output_folder, output_name_distance, spatial_reference)
+create_shp_from_path(graf,path_time, output_folder, output_name_time, spatial_reference)
 
-edges_list = []
-for i in range(len(path)-1):
-    start_node = path[i] 
-    end_node = path[i + 1] 
-    found_edge = False
-    
-    for edge in graf.edges.values():
-        if (edge.from_node.id == start_node and edge.to_node.id == end_node) or (edge.from_node.id == end_node and edge.to_node.id == start_node):
-            edges_list.append(edge)
-            found_edge = True
-            break
-    if not found_edge:
-        print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
-        arcpy.AddMessage(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
-
-        break
-    
-with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
-    for i, edge in enumerate(edges_list):
-        print(edge)
-        geometry = arcpy.FromWKT(edge.wkt)
-        cursor.insertRow([i, geometry])
-
-print("SHP done")
-
-arcpy.AddMessage("Wygenerowano plik SHP")
 script_path = os.path.abspath(__file__)
 script_dir = os.path.dirname(script_path)
-aprx = arcpy.mp.ArcGISProject("CURRENT")  # bieżący projekt ArcGIS
-map_obj = aprx.listMaps()[0]  # pierwsza mapa w projekcie
-output_path = os.path.join(script_dir,output_folder, output_name)
-map_obj.addDataFromPath(output_path)  # dodanie warstwy
+output_path_distance = os.path.join(script_dir,output_folder, output_name_distance)
+add_shp_to_map(output_path_distance)
+output_path_time = os.path.join(script_dir,output_folder, output_name_time)
+add_shp_to_map(output_path_time)
 
 
 output_name = "points.shp"
