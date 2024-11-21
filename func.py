@@ -115,6 +115,7 @@ def create_reachability_map(graph, start_node_id, max_time):
     frontier = PriorityQueue()
     frontier.put((0, start_node_id))
     time_to_reach = {start_node_id: 0}
+    came_from = {start_node_id: None}
     
     while not frontier.empty():
         current_time, current_id = frontier.get()
@@ -142,32 +143,32 @@ def create_reachability_map(graph, start_node_id, max_time):
                 if neighbor.id not in time_to_reach or new_time < time_to_reach[neighbor.id]:
                     time_to_reach[neighbor.id] = new_time
                     frontier.put((new_time, neighbor.id))
+                    came_from[neighbor.id] = current_id
     
     # Zwracamy tylko węzły, do których można dotrzeć w max_time
-    return {node_id: time for node_id, time in time_to_reach.items() if time <= max_time}
+    reachable_nodes= {node_id: time for node_id, time in time_to_reach.items() if time <= max_time}
+    return reachable_nodes, came_from
 
 def create_shp_from_path(graf,path, output_folder, output_name, spatial_reference):
     import arcpy
-    arcpy.management.CreateFeatureclass(output_folder, output_name, "POLYLINE",spatial_reference=spatial_reference)
-    arcpy.AddField_management(f"{output_folder}/{output_name}", "NR", "FLOAT")
-
-    edges_list = []
-    for i in range(len(path)-1):
-        start_node = path[i] 
-        end_node = path[i + 1] 
-        found_edge = False
-        
-        for edge in graf.edges.values():
-            if (edge.from_node.id == start_node and edge.to_node.id == end_node) or (edge.from_node.id == end_node and edge.to_node.id == start_node):
-                edges_list.append(edge)
-                found_edge = True
-                break
-        if not found_edge:
-            print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
-            arcpy.AddMessage(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
-            break
-        
+    
     with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
+        edges_list = []
+        for i in range(len(path)-1):
+            start_node = path[i] 
+            end_node = path[i + 1] 
+            found_edge = False
+            
+            for edge in graf.edges.values():
+                if (edge.from_node.id == start_node and edge.to_node.id == end_node) or (edge.from_node.id == end_node and edge.to_node.id == start_node):
+                    edges_list.append(edge)
+                    found_edge = True
+                    break
+            if not found_edge:
+                print(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
+                arcpy.AddMessage(f"Nie znaleziono krawędzi między {start_node} i {end_node}")
+                break
+            
         for i, edge in enumerate(edges_list):
             # print(edge)
             geometry = arcpy.FromWKT(edge.wkt)

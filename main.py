@@ -76,6 +76,11 @@ spatial_reference = arcpy.Describe(fc).spatialReference
 output_folder= "shp"
 output_name_distance = "path_distance.shp"
 output_name_time = "path_time.shp"
+
+arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
+arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    
 create_shp_from_path(graf,path_distance, output_folder, output_name_distance, spatial_reference)
 create_shp_from_path(graf,path_time, output_folder, output_name_time, spatial_reference)
 
@@ -86,16 +91,48 @@ add_shp_to_map(output_path_distance)
 output_path_time = os.path.join(script_dir,output_folder, output_name_time)
 add_shp_to_map(output_path_time)
 
+warstwa_punktowa_zasieg = arcpy.GetParameterAsText(2)
+travel_time = arcpy.GetParameterAsText(3)
+travel_time = int(travel_time)
+travel_time = travel_time*60 # [s]
+points_zasieg = []
+with arcpy.da.SearchCursor(warstwa_punktowa_zasieg, ['SHAPE@X','SHAPE@Y']) as cursor:
+    for row in cursor:
+        x, y = row[0], row[1]
+        points_zasieg.append((x,y))
+        arcpy.AddMessage(points)
 
-output_name = "points.shp"
+if len(points_zasieg) == 1:
+    x, y = points_zasieg[0]
 
-arcpy.management.CreateFeatureclass(output_folder, output_name, "POINT",spatial_reference=spatial_reference)
-arcpy.AddField_management(f"{output_folder}/{output_name}", "TIME", "FLOAT")
+    point_zasieg = graf.snap(x, y)
+    arcpy.AddMessage(f"Point: {point_zasieg}")
+    
+else:
+    arcpy.AddMessage("W warstwie punktowej do wyznaczenia zasięgu powinien znajdować się 1 punkt !")
 
-reachability_map = create_reachability_map(graf, start_point.id, 900)
-print("Węzły, do których można dotrzeć w maksymalnym czasie:")
 
-with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["TIME", "SHAPE@"]) as cursor:
-    for node in reachability_map:
-        print(node)
-        cursor.insertRow([reachability_map[node], arcpy.PointGeometry(arcpy.Point(node.split(",")[0], node.split(",")[1]), spatial_reference)])
+output_name_zasieg = "zasieg.shp"
+arcpy.management.CreateFeatureclass(output_folder, output_name_zasieg, "POLYLINE", spatial_reference=spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_zasieg}", "NR", "FLOAT")
+reachable_nodes, came_from=create_reachability_map(graf, point_zasieg.id, travel_time)
+for node_id in reachable_nodes:
+    path = retrieve_path(came_from, point_zasieg.id, node_id)
+    create_shp_from_path(graf,path, output_folder, output_name_zasieg, spatial_reference)
+    
+
+output_path_zasieg = os.path.join(script_dir,output_folder, output_name_zasieg)
+add_shp_to_map(output_path_zasieg)
+
+# output_name = "points.shp"
+
+# arcpy.management.CreateFeatureclass(output_folder, output_name, "POINT",spatial_reference=spatial_reference)
+# arcpy.AddField_management(f"{output_folder}/{output_name}", "TIME", "FLOAT")
+
+# reachability_map = create_reachability_map(graf, start_point.id, 900)
+# print("Węzły, do których można dotrzeć w maksymalnym czasie:")
+
+# with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["TIME", "SHAPE@"]) as cursor:
+#     for node in reachability_map:
+#         print(node)
+#         cursor.insertRow([reachability_map[node], arcpy.PointGeometry(arcpy.Point(node.split(",")[0], node.split(",")[1]), spatial_reference)])
