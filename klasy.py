@@ -72,6 +72,9 @@ class Graf:
         self.nodes: Dict[str, Wierzcholek] = {}
         
     def add_node(self, id: str, x: float, y: float) -> Wierzcholek:
+        """
+        Dodaje wierzchołek do grafu, jeśli nie ma wierzchołka w takimi współrzędnymi.
+        """
         if id not in self.nodes:
             self.nodes[id] = Wierzcholek(id, x, y)
         return self.nodes[id]
