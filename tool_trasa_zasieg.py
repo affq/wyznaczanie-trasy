@@ -1,7 +1,7 @@
 import arcpy
 import os
 from klasy import Wierzcholek, Krawedz, Graf
-from func import a_star, retrieve_path, create_reachability_map,add_shp_to_map,create_shp_from_path
+from func import a_star, retrieve_path, create_reachability_map,add_shp_to_map,create_shp_from_path,create_reachability_shp
 
 arcpy.env.overwriteOutput = True
 
@@ -76,13 +76,18 @@ output_path_time = os.path.join(script_dir,output_folder, output_name_time)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
 arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
-create_shp_from_path(graf, path_distance, output_folder, output_name_distance, spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "COST", "FLOAT")
+create_shp_from_path(graf, path_distance, output_folder, output_name_distance)
 add_shp_to_map(output_path_distance)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
 arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    
-create_shp_from_path(graf, path_time, output_folder, output_name_time, spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_time}", "COST", "FLOAT")    
+create_shp_from_path(graf, path_time, output_folder, output_name_time)
 add_shp_to_map(output_path_time)
+
+arcpy.AddMessage(f"Długośc trasy: {cost_so_far_distance[end_point.id]/1000} km")
+arcpy.AddMessage(f"Czas przejazdu trasy: {round(cost_so_far_time[end_point.id] /60)} min")
 
 warstwa_punktowa_zasieg = arcpy.GetParameterAsText(2)
 travel_time = int(arcpy.GetParameterAsText(3)) * 60 # [s]
@@ -108,10 +113,7 @@ output_name_zasieg = "zasieg.shp"
 output_path_zasieg = os.path.join(script_dir,output_folder, output_name_zasieg)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_zasieg, "POLYLINE", spatial_reference=spatial_reference)
-arcpy.AddField_management(f"{output_folder}/{output_name_zasieg}", "NR", "FLOAT")
+arcpy.AddField_management(f"{output_folder}/{output_name_zasieg}", "TravelTime", "FLOAT")
 reachable_nodes, came_from=create_reachability_map(graf, point_zasieg.id, travel_time)
-for node_id in reachable_nodes:
-    path = retrieve_path(came_from, point_zasieg.id, node_id)
-    create_shp_from_path(graf,path, output_folder, output_name_zasieg, spatial_reference)
-    
+create_reachability_shp(graf,output_path_zasieg,reachable_nodes,came_from)
 add_shp_to_map(output_path_zasieg)

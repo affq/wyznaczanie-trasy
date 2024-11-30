@@ -1,7 +1,7 @@
 import arcpy
 import os
 from klasy import Wierzcholek, Krawedz, Graf
-from func import retrieve_path, create_reachability_map, add_shp_to_map, create_shp_from_path
+from func import retrieve_path, create_reachability_map, add_shp_to_map, create_shp_from_path, create_reachability_shp
 arcpy.env.overwriteOutput = True
 
 '''
@@ -70,12 +70,9 @@ output_name_zasieg = "zasieg.shp"
 output_path_zasieg = os.path.join(script_dir,output_folder, output_name_zasieg)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_zasieg, "POLYLINE", spatial_reference=spatial_reference)
-arcpy.AddField_management(f"{output_folder}/{output_name_zasieg}", "NR", "FLOAT")
+arcpy.AddField_management(f"{output_folder}/{output_name_zasieg}", "TravelTime", "FLOAT")
 reachable_nodes, came_from=create_reachability_map(graf, point_zasieg.id, travel_time)
-for node_id in reachable_nodes:
-    path = retrieve_path(came_from, point_zasieg.id, node_id)
-    create_shp_from_path(graf,path, output_folder, output_name_zasieg, spatial_reference)
-    
+create_reachability_shp(graf,output_path_zasieg,reachable_nodes,came_from)
 add_shp_to_map(output_path_zasieg)
 
 

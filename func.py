@@ -163,10 +163,10 @@ def create_reachability_map(graph, start_node_id, max_time):
     reachable_nodes= {node_id: time for node_id, time in time_to_reach.items() if time <= max_time}
     return reachable_nodes, came_from
 
-def create_shp_from_path(graf,path, output_folder, output_name, spatial_reference):
+def create_shp_from_path(graf,path, output_folder, output_name):
     import arcpy
     
-    with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@"]) as cursor:
+    with arcpy.da.InsertCursor(f"{output_folder}/{output_name}", ["NR", "SHAPE@","COST"]) as cursor:
         edges_list = []
         for i in range(len(path)-1):
             start_node = path[i] 
@@ -186,7 +186,8 @@ def create_shp_from_path(graf,path, output_folder, output_name, spatial_referenc
         for i, edge in enumerate(edges_list):
             # print(edge)
             geometry = arcpy.FromWKT(edge.wkt)
-            cursor.insertRow([i, geometry])
+            cost = edge.cost_time()
+            cursor.insertRow([i, geometry,cost])
 
     arcpy.AddMessage("Wygenerowano plik SHP")
     
@@ -196,3 +197,19 @@ def add_shp_to_map(path):
     map_obj = aprx.listMaps()[0]  # Pobranie pierwszej mapy w projekcie
     map_obj.addDataFromPath(path)  # Dodanie wygenerowanej warstwy do mapy
     arcpy.AddMessage(f"Dodano plik SHP do mapy: {path}")
+    
+def create_reachability_shp(graph,path, reachable_nodes, came_from):
+    import arcpy
+    with arcpy.da.InsertCursor(path, ['SHAPE@', 'TravelTime']) as cursor:
+        for node_id, time in reachable_nodes.items():
+            if came_from[node_id] is not None:
+                current_node = graph.get_node_by_id(node_id)
+                previous_node = graph.get_node_by_id(came_from[node_id])
+                
+                for edge, neighbour in previous_node.get_neighbours():
+                    if neighbour == current_node:
+                        line = arcpy.FromWKT(edge.wkt)
+                        time = time/60  
+                        cursor.insertRow([line, time])
+                        break 
+    arcpy.AddMessage("Wygenerowano plik SHP dla zasięgu")

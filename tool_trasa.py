@@ -80,10 +80,15 @@ output_path_time = os.path.join(script_dir,output_folder, output_name_time)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
 arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
-create_shp_from_path(graf,path_distance, output_folder, output_name_distance, spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "COST", "FLOAT")
+create_shp_from_path(graf,path_distance, output_folder, output_name_distance)
 add_shp_to_map(output_path_distance)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
 arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    
-create_shp_from_path(graf,path_time, output_folder, output_name_time, spatial_reference)
+arcpy.AddField_management(f"{output_folder}/{output_name_time}", "COST", "FLOAT")    
+create_shp_from_path(graf,path_time, output_folder, output_name_time)
 add_shp_to_map(output_path_time)
+
+arcpy.AddMessage(f"Długośc trasy: {cost_so_far_distance[end_point.id]/1000} km")
+arcpy.AddMessage(f"Czas przejazdu trasy: {round(cost_so_far_time[end_point.id] /60)} min")
