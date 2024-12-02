@@ -17,4 +17,3 @@ Autorzy: Adrian Fabisiewicz (@affq), Julia Gomulska (@julka3110)
 - Python
 - ArcPy
 - Git do wersjonowania kodu
-

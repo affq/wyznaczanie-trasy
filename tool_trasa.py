@@ -8,8 +8,8 @@ arcpy.env.overwriteOutput = True
 Parametry do toola:
 0. warstwa_punktowa FeatureLayer - warstwa punktowa zawierająca dwa punkty - start i end
 1. fc FeatureLayer - warstwa z siecią dróg
-2. najkrotsza Boolean - jeśli True to tworzy się najkrótsza trasa
-3. najszybsza Boolean - jeśli True to tworzy się najszybsza trasa
+2. najkrotsza Boolean - jeśli true to tworzy się najkrótsza trasa
+3. najszybsza Boolean - jeśli true to tworzy się najszybsza trasa
 '''
 
 warstwa_punktowa = arcpy.GetParameterAsText(0)
@@ -22,6 +22,8 @@ spatial_reference = arcpy.Describe(fc).spatialReference
 script_path = os.path.abspath(__file__)
 script_dir = os.path.dirname(script_path)
 output_folder= "shp"
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
 
 if najkrotsza == 'false' and najszybsza == 'false':
     arcpy.AddMessage("Nie wybrano żadnej opcji.")
@@ -57,7 +59,7 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
         
 with arcpy.da.SearchCursor(warstwa_punktowa, ['SHAPE@X','SHAPE@Y']) as cursor:
     arcpy.AddMessage(cursor)
-    points =[]
+    points = []
     for row in cursor:
         x, y = row[0], row[1]
         points.append((x,y))
@@ -72,7 +74,8 @@ if len(points) == 2:
     arcpy.AddMessage(f"Start Point: {start_point}")
     arcpy.AddMessage(f"End Point: {end_point}")
 else:
-    arcpy.AddMessage("W warstwie punktowej powinny znajdować się 2 punkty !")
+    arcpy.AddMessage("W warstwie punktowej powinny znajdować się 2 punkty!")
+    exit()
 
 
 if najkrotsza == 'true':
@@ -81,12 +84,12 @@ if najkrotsza == 'true':
     path_distance = retrieve_path(came_from_distance, start_point.id, end_point.id)
 
     output_name_distance = "path_distance.shp"
-    output_path_distance = os.path.join(script_dir,output_folder, output_name_distance)
+    output_path_distance = os.path.join(script_dir, output_folder, output_name_distance)
 
     arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
     arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
     arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "COST", "FLOAT")
-    create_shp_from_path(graf,path_distance, output_folder, output_name_distance)
+    create_shp_from_path(graf, path_distance, output_folder, output_name_distance)
     add_shp_to_map(output_path_distance)
 
     arcpy.AddMessage(f"Długość trasy: {cost_so_far_distance[end_point.id]/1000} km")
@@ -97,12 +100,12 @@ if najszybsza == 'true':
     path_time = retrieve_path(came_from_time, start_point.id, end_point.id)
 
     output_name_time = "path_time.shp"
-    output_path_time = os.path.join(script_dir,output_folder, output_name_time)
+    output_path_time = os.path.join(script_dir, output_folder, output_name_time)
 
     arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
     arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    
     arcpy.AddField_management(f"{output_folder}/{output_name_time}", "COST", "FLOAT")    
-    create_shp_from_path(graf,path_time, output_folder, output_name_time)
+    create_shp_from_path(graf, path_time, output_folder, output_name_time)
     add_shp_to_map(output_path_time)
 
-    arcpy.AddMessage(f"Czas przejazdu trasy: {round(cost_so_far_time[end_point.id] /60)} min")
+    arcpy.AddMessage(f"Czas przejazdu trasy: {round(cost_so_far_time[end_point.id]/60)} min")
