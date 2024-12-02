@@ -130,10 +130,10 @@ def create_reachability_map(graph, start_node_id, max_time):
     frontier.put((0, start_node_id))
     time_to_reach = {start_node_id: 0}
     came_from = {start_node_id: None}
-    
+
     while not frontier.empty():
         current_time, current_id = frontier.get()
-        
+
         # Jeśli czas dotarcia do obecnego wierzchołka przekracza max_time, pomijamy go
         if current_time > max_time:
             continue

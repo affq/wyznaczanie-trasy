@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 from func import distance
+import math
 
 road_classes_speed = {
     "A": 140,
@@ -28,6 +29,13 @@ class Wierzcholek:
             node = edge.get_end(self)
             neighbours.append((edge, node))
         return neighbours
+    
+    def get_indexes(self) -> List[int]:
+        first = str(math.floor(self.x)) + "," + str(math.floor(self.y))
+        second = str(math.ceil(self.x)) + "," + str(math.ceil(self.y))
+        third = str(math.floor(self.x)) + "," + str(math.ceil(self.y))
+        fourth = str(math.ceil(self.x)) + "," + str(math.floor(self.y))
+        return [first, second, third, fourth]
     
     def __repr__(self) -> str:
         return f"Wierzcholek(id={self.id}, x={self.x}, y={self.y})"
@@ -70,14 +78,16 @@ class Graf:
     def __init__(self):
         self.edges: Dict[str, Krawedz] = {}
         self.nodes: Dict[str, Wierzcholek] = {}
-        
-    def add_node(self, id: str, x: float, y: float) -> Wierzcholek:
+
+    def add_node(self, node: Wierzcholek) -> Wierzcholek:
         """
-        Dodaje wierzchołek do grafu, jeśli nie ma wierzchołka w takimi współrzędnymi.
+        Dodaje wierzchołek do grafu, jeśli nie ma wierzchołka z podobnymi współrzędnymi.
         """
-        if id not in self.nodes:
-            self.nodes[id] = Wierzcholek(id, x, y)
-        return self.nodes[id]
+        for idx in node.get_indexes():
+            if idx in self.nodes:
+                return self.nodes[idx]
+        self.nodes[node.id] = node
+        return node
 
     def add_edge(self, edge: Krawedz) -> None:
         self.edges[edge.id] = edge
