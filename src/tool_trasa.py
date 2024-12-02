@@ -14,21 +14,18 @@ Parametry do toola:
 
 warstwa_punktowa = arcpy.GetParameterAsText(0)
 fc = arcpy.GetParameterAsText(1)
+spatial_reference = arcpy.Describe(fc).spatialReference
 najkrotsza = arcpy.GetParameterAsText(2)
 najszybsza = arcpy.GetParameterAsText(3)
-graf = Graf()
 
-spatial_reference = arcpy.Describe(fc).spatialReference
-script_path = os.path.abspath(__file__)
-script_dir = os.path.dirname(script_path)
-output_folder= "shp"
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+output_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "shp")
+os.makedirs(output_folder, exist_ok=True)
 
 if najkrotsza == 'false' and najszybsza == 'false':
     arcpy.AddMessage("Nie wybrano żadnej opcji.")
     exit()
 
+graf = Graf()
 with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as cursor:
     for row in cursor:
         startPoint = row[1].firstPoint
@@ -84,7 +81,7 @@ if najkrotsza == 'true':
     path_distance = retrieve_path(came_from_distance, start_point.id, end_point.id)
 
     output_name_distance = "path_distance.shp"
-    output_path_distance = os.path.join(script_dir, output_folder, output_name_distance)
+    output_path_distance = os.path.join(output_folder, output_name_distance)
 
     arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
     arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
@@ -100,7 +97,7 @@ if najszybsza == 'true':
     path_time = retrieve_path(came_from_time, start_point.id, end_point.id)
 
     output_name_time = "path_time.shp"
-    output_path_time = os.path.join(script_dir, output_folder, output_name_time)
+    output_path_time = os.path.join(output_folder, output_name_time)
 
     arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
     arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    

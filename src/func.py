@@ -198,7 +198,7 @@ def add_shp_to_map(path):
     map_obj.addDataFromPath(path)  # Dodanie wygenerowanej warstwy do mapy
     arcpy.AddMessage(f"Dodano plik SHP do mapy: {path}")
     
-def create_reachability_shp(graph,path, reachable_nodes, came_from):
+def create_reachability_shp(graph, path, reachable_nodes, came_from):
     import arcpy
     with arcpy.da.InsertCursor(path, ['SHAPE@', 'TravelTime']) as cursor:
         for node_id, time in reachable_nodes.items():

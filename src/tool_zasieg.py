@@ -11,19 +11,15 @@ Parametry do toola:
 2. travel_time Double - czas w minutach
 '''
 
-graf = Graf()
 fc = arcpy.GetParameterAsText(0)
+spatial_reference = arcpy.Describe(fc).spatialReference
 warstwa_punktowa_zasieg = arcpy.GetParameterAsText(1)
 travel_time = int(arcpy.GetParameterAsText(2)) * 60 # [s]
-points_zasieg = []
 
-spatial_reference = arcpy.Describe(fc).spatialReference
-script_path = os.path.abspath(__file__)
-script_dir = os.path.dirname(script_path)
-output_folder= "shp"
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+output_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "shp")
+os.makedirs(output_folder, exist_ok=True)
 
+graf = Graf()
 with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as cursor:
     for row in cursor:
         startPoint = row[1].firstPoint
@@ -52,6 +48,7 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
         edge = Krawedz(edge_id, start_node, end_node, length, road_class, direction, geometry)
         graf.add_edge(edge)
 
+points_zasieg = []
 with arcpy.da.SearchCursor(warstwa_punktowa_zasieg, ['SHAPE@X','SHAPE@Y']) as cursor:
     for row in cursor:
         x, y = row[0], row[1]
@@ -69,7 +66,7 @@ else:
     exit()
 
 output_name_zasieg = "zasieg.shp"
-output_path_zasieg = os.path.join(script_dir,output_folder, output_name_zasieg)
+output_path_zasieg = os.path.join(output_folder, output_name_zasieg)
 
 arcpy.management.CreateFeatureclass(output_folder, output_name_zasieg, "POLYLINE", spatial_reference=spatial_reference)
 arcpy.AddField_management(f"{output_folder}/{output_name_zasieg}", "TravelTime", "FLOAT")
