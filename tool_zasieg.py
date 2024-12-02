@@ -89,9 +89,3 @@ with arcpy.da.InsertCursor(f"{output_folder}/{output_name_zasieg}", ["TIME", "SH
     for node in reachable_nodes:
         print(node)
         cursor.insertRow([reachable_nodes[node], arcpy.PointGeometry(arcpy.Point(node.split(",")[0], node.split(",")[1]), spatial_reference)])
-
-output_name_otoczka = "otoczka.shp"
-output_path_otoczka = os.path.join(script_dir, output_folder, output_name_otoczka)
-
-arcpy.MinimumBoundingGeometry_management(f"{output_folder}/{output_name_zasieg}", f"{output_folder}/{output_name_otoczka}", "CONVEX_HULL", "ALL")
-add_shp_to_map(output_path_otoczka)

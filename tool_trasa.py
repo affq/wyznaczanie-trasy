@@ -8,11 +8,24 @@ arcpy.env.overwriteOutput = True
 Parametry do toola:
 0. warstwa_punktowa FeatureLayer - warstwa punktowa zawierająca dwa punkty - start i end
 1. fc FeatureLayer - warstwa z siecią dróg
+2. najkrotsza Boolean - jeśli True to tworzy się najkrótsza trasa
+3. najszybsza Boolean - jeśli True to tworzy się najszybsza trasa
 '''
 
 warstwa_punktowa = arcpy.GetParameterAsText(0)
 fc = arcpy.GetParameterAsText(1)
+najkrotsza = arcpy.GetParameterAsText(2)
+najszybsza = arcpy.GetParameterAsText(3)
 graf = Graf()
+
+spatial_reference = arcpy.Describe(fc).spatialReference
+script_path = os.path.abspath(__file__)
+script_dir = os.path.dirname(script_path)
+output_folder= "shp"
+
+if najkrotsza == 'false' and najszybsza == 'false':
+    arcpy.AddMessage("Nie wybrano żadnej opcji.")
+    exit()
 
 with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as cursor:
     for row in cursor:
@@ -61,34 +74,35 @@ if len(points) == 2:
 else:
     arcpy.AddMessage("W warstwie punktowej powinny znajdować się 2 punkty !")
 
-came_from_distance, cost_so_far_distance = a_star(graf, start_point, end_point, 'distance')
-length_a_star_distance = cost_so_far_distance[end_point.id]
-path_distance = retrieve_path(came_from_distance, start_point.id, end_point.id)
 
-came_from_time, cost_so_far_time = a_star(graf, start_point, end_point, 'time')
-length_a_star_time = cost_so_far_time[end_point.id]
-path_time = retrieve_path(came_from_time, start_point.id, end_point.id)
+if najkrotsza == 'true':
+    came_from_distance, cost_so_far_distance = a_star(graf, start_point, end_point, 'distance')
+    length_a_star_distance = cost_so_far_distance[end_point.id]
+    path_distance = retrieve_path(came_from_distance, start_point.id, end_point.id)
 
-spatial_reference = arcpy.Describe(fc).spatialReference
-script_path = os.path.abspath(__file__)
-script_dir = os.path.dirname(script_path)
-output_folder= "shp"
-output_name_distance = "path_distance.shp"
-output_path_distance = os.path.join(script_dir,output_folder, output_name_distance)
-output_name_time = "path_time.shp"
-output_path_time = os.path.join(script_dir,output_folder, output_name_time)
+    output_name_distance = "path_distance.shp"
+    output_path_distance = os.path.join(script_dir,output_folder, output_name_distance)
 
-arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
-arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
-arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "COST", "FLOAT")
-create_shp_from_path(graf,path_distance, output_folder, output_name_distance)
-add_shp_to_map(output_path_distance)
+    arcpy.management.CreateFeatureclass(output_folder, output_name_distance, "POLYLINE", spatial_reference=spatial_reference)
+    arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "NR", "FLOAT")
+    arcpy.AddField_management(f"{output_folder}/{output_name_distance}", "COST", "FLOAT")
+    create_shp_from_path(graf,path_distance, output_folder, output_name_distance)
+    add_shp_to_map(output_path_distance)
 
-arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
-arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    
-arcpy.AddField_management(f"{output_folder}/{output_name_time}", "COST", "FLOAT")    
-create_shp_from_path(graf,path_time, output_folder, output_name_time)
-add_shp_to_map(output_path_time)
+    arcpy.AddMessage(f"Długość trasy: {cost_so_far_distance[end_point.id]/1000} km")
 
-arcpy.AddMessage(f"Długośc trasy: {cost_so_far_distance[end_point.id]/1000} km")
-arcpy.AddMessage(f"Czas przejazdu trasy: {round(cost_so_far_time[end_point.id] /60)} min")
+if najszybsza == 'true':
+    came_from_time, cost_so_far_time = a_star(graf, start_point, end_point, 'time')
+    length_a_star_time = cost_so_far_time[end_point.id]
+    path_time = retrieve_path(came_from_time, start_point.id, end_point.id)
+
+    output_name_time = "path_time.shp"
+    output_path_time = os.path.join(script_dir,output_folder, output_name_time)
+
+    arcpy.management.CreateFeatureclass(output_folder, output_name_time, "POLYLINE", spatial_reference=spatial_reference)
+    arcpy.AddField_management(f"{output_folder}/{output_name_time}", "NR", "FLOAT")    
+    arcpy.AddField_management(f"{output_folder}/{output_name_time}", "COST", "FLOAT")    
+    create_shp_from_path(graf,path_time, output_folder, output_name_time)
+    add_shp_to_map(output_path_time)
+
+    arcpy.AddMessage(f"Czas przejazdu trasy: {round(cost_so_far_time[end_point.id] /60)} min")
