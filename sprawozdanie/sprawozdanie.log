@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.3.17)  8 DEC 2024 22:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.3.17)  8 DEC 2024 22:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -291,24 +291,24 @@ File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 ) (sprawozdanie.aux)
 \openout1 = `sprawozdanie.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
@@ -366,7 +366,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\adria\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 15.
+Package hyperref Info: Link coloring OFF on input line 16.
  (sprawozdanie.out) (sprawozdanie.out)
 \@outlinefile=\write3
 \openout3 = `sprawozdanie.out'.
@@ -377,89 +377,89 @@ Package hyperref Info: Link coloring OFF on input line 15.
 <img/narzedzie-interfejs-trasa.png, id=116, 244.5135pt x 188.50426pt>
 File: img/narzedzie-interfejs-trasa.png Graphic file (type png)
 <use img/narzedzie-interfejs-trasa.png>
-Package pdftex.def Info: img/narzedzie-interfejs-trasa.png  used on input line 106.
+Package pdftex.def Info: img/narzedzie-interfejs-trasa.png  used on input line 107.
 (pdftex.def)             Requested size: 213.39568pt x 164.52086pt.
  [3 <./img/narzedzie-interfejs-trasa.png>]
 <img/glowny-copernicus.png, id=129, 910.602pt x 636.57825pt>
 File: img/glowny-copernicus.png Graphic file (type png)
 <use img/glowny-copernicus.png>
-Package pdftex.def Info: img/glowny-copernicus.png  used on input line 120.
+Package pdftex.def Info: img/glowny-copernicus.png  used on input line 121.
 (pdftex.def)             Requested size: 362.77525pt x 253.60687pt.
 <img/glowny-copernicus-google.png, id=130, 922.647pt x 625.1355pt>
 File: img/glowny-copernicus-google.png Graphic file (type png)
 <use img/glowny-copernicus-google.png>
-Package pdftex.def Info: img/glowny-copernicus-google.png  used on input line 126.
+Package pdftex.def Info: img/glowny-copernicus-google.png  used on input line 127.
 (pdftex.def)             Requested size: 362.77525pt x 245.79546pt.
  [4 <./img/glowny-copernicus.png> <./img/glowny-copernicus-google.png>]
 <img/motoarena-rod.png, id=139, 944.328pt x 623.32875pt>
 File: img/motoarena-rod.png Graphic file (type png)
 <use img/motoarena-rod.png>
-Package pdftex.def Info: img/motoarena-rod.png  used on input line 137.
+Package pdftex.def Info: img/motoarena-rod.png  used on input line 138.
 (pdftex.def)             Requested size: 426.79135pt x 281.71278pt.
 <img/motoarena-rod-google.png, id=140, 886.512pt x 564.30824pt>
 File: img/motoarena-rod-google.png Graphic file (type png)
 <use img/motoarena-rod-google.png>
-Package pdftex.def Info: img/motoarena-rod-google.png  used on input line 143.
+Package pdftex.def Info: img/motoarena-rod-google.png  used on input line 144.
 (pdftex.def)             Requested size: 426.79135pt x 271.67427pt.
  [5 <./img/motoarena-rod.png> <./img/motoarena-rod-google.png>]
 <img/kierunek-opis.png, id=149, 251.7405pt x 337.86224pt>
 File: img/kierunek-opis.png Graphic file (type png)
 <use img/kierunek-opis.png>
-Package pdftex.def Info: img/kierunek-opis.png  used on input line 160.
+Package pdftex.def Info: img/kierunek-opis.png  used on input line 161.
 (pdftex.def)             Requested size: 149.37958pt x 200.48663pt.
 <img/kierunek-orzechowa-truskawkowa.png, id=150, 251.13824pt x 335.45325pt>
 File: img/kierunek-orzechowa-truskawkowa.png Graphic file (type png)
 <use img/kierunek-orzechowa-truskawkowa.png>
-Package pdftex.def Info: img/kierunek-orzechowa-truskawkowa.png  used on input line 169.
+Package pdftex.def Info: img/kierunek-orzechowa-truskawkowa.png  used on input line 170.
 (pdftex.def)             Requested size: 149.37958pt x 199.53828pt.
 
-Underfull \hbox (badness 2096) in paragraph at lines 170--170
+Underfull \hbox (badness 2096) in paragraph at lines 171--171
 []\T1/cmr/m/n/9 (a) |Trasa gdy punkt po-cz¡t-kowy
  []
 
 <img/kierunek-truskawkowa-orzechowa.png, id=151, 248.127pt x 333.04425pt>
 File: img/kierunek-truskawkowa-orzechowa.png Graphic file (type png)
 <use img/kierunek-truskawkowa-orzechowa.png>
-Package pdftex.def Info: img/kierunek-truskawkowa-orzechowa.png  used on input line 175.
+Package pdftex.def Info: img/kierunek-truskawkowa-orzechowa.png  used on input line 176.
 (pdftex.def)             Requested size: 149.37958pt x 200.49889pt.
 
-Underfull \hbox (badness 1910) in paragraph at lines 176--176
+Underfull \hbox (badness 1910) in paragraph at lines 177--177
 []\T1/cmr/m/n/9 (b) |Trasa gdy punkt po-cz¡t-kowy
  []
 
 [6 <./img/kierunek-opis.png> <./img/kierunek-orzechowa-truskawkowa.png> <./img/kierunek-truskawkowa-orzechowa.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 187--189
+Underfull \hbox (badness 10000) in paragraph at lines 188--190
 
  []
 
 <img/narzedzie-interfejs-zasieg.png, id=163, 247.52475pt x 172.84575pt>
 File: img/narzedzie-interfejs-zasieg.png Graphic file (type png)
 <use img/narzedzie-interfejs-zasieg.png>
-Package pdftex.def Info: img/narzedzie-interfejs-zasieg.png  used on input line 224.
+Package pdftex.def Info: img/narzedzie-interfejs-zasieg.png  used on input line 225.
 (pdftex.def)             Requested size: 213.39568pt x 149.0163pt.
 [7 <./img/narzedzie-interfejs-zasieg.png>]
 <img/rynek-2-min.png, id=173, 558.28575pt x 498.06075pt>
 File: img/rynek-2-min.png Graphic file (type png)
 <use img/rynek-2-min.png>
-Package pdftex.def Info: img/rynek-2-min.png  used on input line 235.
+Package pdftex.def Info: img/rynek-2-min.png  used on input line 236.
 (pdftex.def)             Requested size: 149.37958pt x 133.26222pt.
 <img/umk-7-min.png, id=174, 887.11424pt x 578.16pt>
 File: img/umk-7-min.png Graphic file (type png)
 <use img/umk-7-min.png>
-Package pdftex.def Info: img/umk-7-min.png  used on input line 241.
+Package pdftex.def Info: img/umk-7-min.png  used on input line 242.
 (pdftex.def)             Requested size: 234.73654pt x 152.9823pt.
 <img/uniwersytet-15-min.png, id=175, 1559.8275pt x 1055.945pt>
 File: img/uniwersytet-15-min.png Graphic file (type png)
 <use img/uniwersytet-15-min.png>
-Package pdftex.def Info: img/uniwersytet-15-min.png  used on input line 254.
+Package pdftex.def Info: img/uniwersytet-15-min.png  used on input line 255.
 (pdftex.def)             Requested size: 192.0548pt x 130.01097pt.
 <img/uniwersytet-15-min-google.png, id=176, 473.3685pt x 349.90726pt>
 File: img/uniwersytet-15-min-google.png Graphic file (type png)
 <use img/uniwersytet-15-min-google.png>
-Package pdftex.def Info: img/uniwersytet-15-min-google.png  used on input line 260.
+Package pdftex.def Info: img/uniwersytet-15-min-google.png  used on input line 261.
 (pdftex.def)             Requested size: 192.0548pt x 141.96259pt.
  [8 <./img/rynek-2-min.png> <./img/umk-7-min.png> <./img/uniwersytet-15-min.png> <./img/uniwersytet-15-min-google.png>]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 279.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 280.
  (C:\Users\adria\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 ) [9] (sprawozdanie.aux)
@@ -473,9 +473,9 @@ Here is how much of TeX's memory you used:
  32460 multiletter control sequences out of 15000+600000
  522864 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,77p,792b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,77p,792b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk>
-Output written on sprawozdanie.pdf (9 pages, 2718961 bytes).
+Output written on sprawozdanie.pdf (9 pages, 2718934 bytes).
 PDF statistics:
  550 PDF objects out of 1000 (max. 8388607)
  71 named destinations out of 1000 (max. 500000)

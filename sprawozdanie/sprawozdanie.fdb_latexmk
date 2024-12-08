@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1733693900.95589 "c:/Users/adria/Desktop/pag-2/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1733693904.10433 0
+["pdflatex"] 1733694001.24896 "c:/Users/adria/Desktop/pag-2/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1733694004.66106 0
   "C:/Users/adria/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1731971513 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/adria/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1684708379 31952 e91feeb5504c30dc59296b94900ee460 ""
   "C:/Users/adria/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk" 1679012812 40136 31d5220b499ce0ec017231a80b9b6ffb ""
@@ -94,7 +94,7 @@
   "C:/Users/adria/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/adria/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/adria/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/adria/Desktop/pag-2/sprawozdanie/sprawozdanie.tex" 1733693900 19018 205f877f7cef580784625bbc65ec1709 ""
+  "c:/Users/adria/Desktop/pag-2/sprawozdanie/sprawozdanie.tex" 1733694000 19036 f5deaf59fee2da209d09311c2208c4d4 ""
   "img/glowny-copernicus-google.png" 1733690152 747732 621e341663e52b75b98fcca601ee007b ""
   "img/glowny-copernicus.png" 1733690152 570406 0bc388e10c39556395c0aecbcf1a56a0 ""
   "img/kierunek-opis.png" 1733690152 119486 c4c588f87bdfc2c51a58e6e272ac8623 ""
@@ -108,9 +108,9 @@
   "img/umk-7-min.png" 1733688665 483466 263fc6d2d0e04979e445e029dacfcd98 ""
   "img/uniwersytet-15-min-google.png" 1733690152 195421 3bdc2324eef3289d032c1735f683610c ""
   "img/uniwersytet-15-min.png" 1733693037 276413 faf2000cf4d504806a1963221d2ad232 ""
-  "sprawozdanie.aux" 1733693903 5106 c684c034d93647cc6f333d2afc1fc382 "pdflatex"
-  "sprawozdanie.out" 1733693903 3126 d1b2ba4e51aaaef0d6fa1c3c437429c6 "pdflatex"
-  "sprawozdanie.tex" 1733693900 19018 205f877f7cef580784625bbc65ec1709 ""
+  "sprawozdanie.aux" 1733694004 5106 c684c034d93647cc6f333d2afc1fc382 "pdflatex"
+  "sprawozdanie.out" 1733694004 3126 d1b2ba4e51aaaef0d6fa1c3c437429c6 "pdflatex"
+  "sprawozdanie.tex" 1733694000 19036 f5deaf59fee2da209d09311c2208c4d4 ""
   (generated)
   "sprawozdanie.aux"
   "sprawozdanie.log"
