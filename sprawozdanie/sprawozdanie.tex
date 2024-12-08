@@ -26,43 +26,14 @@ Celem ćwiczenia było uruchomienie algorytmów wyznaczania trasy dla sieci drog
 Ćwiczenie zostało wykonane w języku Python z wykorzystaniem biblioteki ArcPy. Do kontroli wersji korzystano z systemu Git. Danymi wejściowymi były dane BDOT dla Torunia i powiatu toruńskiego, udostępnione przez prowadzącego.
 
 \section{Opracowane algorytmy}
-Algorytm Dijkstry i A* został opracowany na podstawie rozwiązania opublikowanego na stronie redblobgames.com dostepnego pod linkiem: https://www.redblobgames.com/pathfinding/a-star/implementation.html.
+Algorytm A* został opracowany na podstawie rozwiązania opublikowanego na stronie redblobgames.com [1].
 Skorzystano z istniejącego rozwiązania celem zaoszczędzenia czasu i chęci skupienia się na dostosowaniu kodu do postawionych wamagań oraz integracji z oprogramowaniem GIS.
 Użyto innych struktur danych niż w rozwiązaniu internetowym: zamiast bezpośredniego działania na lokalizacjach opisanych jako para współrzędnych, skorzystano z obiektów wierzchołków i ich identyfikatorów.
 Zrezygnowano z implemetacji własnej klasy \textit{PriorityQueue}, zamiast tego skorzystano z kolejki priorytetowej \textit{PriorityQueue} modułu \textit{queue} dostępnego w Pythonie.
 Dodano weryfikację wejściowych wierzchołków w celu upewnienia się, że istnieją w grafie, obsługę kierunkowości dróg i możliwość wyboru kryterium wyznaczania trasy (w algorytmie A*). 
-\subsection{Algorytm Djikstry}
-Algorytm służy do wykrywania najkrótszej ścieżki między dwoma wierzchołkami w grafie. Algorytm działa w następujący sposób:
-\begin{enumerate}
-    \item Inicjalizacja 
-    \begin{enumerate}
-        \item Kolejka priorytetowa \textit{frontier} służy do przechowywania wierzchołków z priorytetami opartymi na kosztach dotarcia do tych nich. Jest inicjalizowana z wierzchołkiem początkowym, a jego priorytet wynosi 0.
-        \item Słowniki \textit{came\_from} oraz \textit{cost\_so\_far} są inicjalizowane jako puste. Przechowują informacje o poprzednikach wierzchołków oraz kosztach dojścia do nich.
-    \end{enumerate}
-    \item Przetwarzanie wierzchołków
-    \begin{enumerate}
-        \item Algorytm działa do momentu, gdy kolejka priorytetowa zostanie opróżniona lub gdy zostanie odnaleziona ścieżka do wierzchołka końcowego.
-        \item W każdej iteracji z kolejki pobierany jest wierzchołek o najniższym priorytecie.
-    \end{enumerate}
-    \item Przetwarzanie sąsiadów danego wierzchołka
-    \begin{enumerate}
-        \item Dla każdego sąsiada aktualnie analizowanego wierzchołka sprawdzane są dostępne krawędzie i ich kierunkowość.
-        \item Jeśli droga jest przejezdna w odpowiednim kierunku, obliczany jest nowy koszt dojścia do węzła sąsiedniego.
-    \end{enumerate}
-    \item Aktualizacja wartości
-    \begin{enumerate}
-        \item Jeśli węzęł - sąsiad nie został jeszcze odwiedzony lub nowo obliczony koszt dotarcia jest mniejszy od kosztu zapisanego w słowniku rejestrowany jest nowy, mniejszy koszt dotarcia.
-        \item Wierzchołek sąsiedni jest dodawany do kolejki priorytetowej z nowym priorytetem. Priorytet jest równy nowemu kosztowi dotarcia do wierzchołka.
-        \item Wierzchołek aktualnie analizowany jest zapisywany jako poprzednik wierzchołka sąsiedniego.
-    \end{enumerate}
-    \item Zakończenie 
-    \begin{enumerate}
-        \item Po zakończeniu algorytmu, zwracane są dwa słowniki: \textit{came\_from} - pozwalający na rekonstrukcję przebiegu ścieżki oraz \textit{cost\_so\_far} - zawierający skumulowane koszty dotarcia do wierzchołków.
-    \end{enumerate}
-\end{enumerate}
 
 \subsection{Algorytm A*}
-Algorytm A* jest rozszerzeniem algorytmu Dijkstry, który wprowadza heurystykę do szacowania kosztu dotarcia do celu. Dodatkowo umożliwia wyznaczenie kosztu dotarcia do wierzchołka na podstawie długości drogi lub czasu przejazdu.
+Algorytm A* jest rozszerzeniem algorytmu Dijkstry, który wprowadza heurystykę do szacowania kosztu dotarcia do celu. Dodatkowo uwzględnia kierunkowośc dróg i umożliwia wyznaczenie kosztu dotarcia do wierzchołka na podstawie długości drogi lub czasu przejazdu.
 Algorytm działa w następujący sposób:
 \begin{enumerate}
     \item Inicjalizacja 
@@ -114,7 +85,7 @@ Wyznaczenie zasięgu opiera się na funkcji \textit{create\_reachability\_map}, 
     \end{enumerate}
     \item Przetwarzanie sąsiadów danego wierzchołka
     \begin{enumerate}
-        \item Dla każdego wierzchołka - sąsiada sprawdzana jest kierunkowość drogi.
+        \item Dla każdego wierzchołka - sąsiada sprawdzana jest kierunkowość dróg do niego prowadzących.
         \item Jeśli droga jest przejezdna w odpowiednim kierunku, obliczany jest czas dotarcia do sąsiada.
         \item Jeśli sąsiad nie ma jeszcze przypisanego czasu dotarcia lub nowo obliczony czas jest mniejszy od zapisanego, czas jest aktualizowany.
         \item Wierzchołek sąsiadni jest dodawany do kolejki priorytetowej z nowym priorytetem.
@@ -165,7 +136,7 @@ Punkty są pobierane z wybranej dwupunktowej warstwy zawierającej punkt począt
 \end{figure}
 
 \subsection{Przykład 3: Drogi z różną kierunkowością}
-Do zaprezentowania działania algorytmu w zależności od kierunkowości przypisano wybranym ulicom różne wartości atrybuty kierunkowości. Informacje o kierunkowości danej
+Do zaprezentowania działania algorytmu w zależności od kierunkowości przypisano wybranym ulicom różne wartości atrybutu, który ją określa. Informacje o kierunkowości danej
 drogi przedstawiono na poniższym rysunku.
 \begin{figure}[H]
     \centering
@@ -187,12 +158,12 @@ Różnicę w przebiegu trasy najkrótszej dla dwóch punktów zlokalizowanych pr
         \includegraphics[width=\textwidth]{img/kierunek-truskawkowa-orzechowa.png}
         \caption{Trasa gdy punkt początkowy znajduje się przy ulicy Truskawkowej}
     \end{subfigure}
-    \caption{Porównanie tras dla puntków przy ulicach Orzechowej i Truskawkowej}
+    \caption{Porównanie przeviegu trasy w zależności od kierunkowości dróg}
 \end{figure}
 
 \section{Zasięg}
 \subsection{Integracja z GIS}
-Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku 6.
+Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku poniżej.
 
 \begin{figure}[H]
     \centering
@@ -234,9 +205,17 @@ Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS P
 
 \section{Wnioski}
 Stworzony algorytm dobrze wyznacza trasę najkrótszą i najszybszą pomiędzy dwoma punktami. W przypadku zasięgu, algorytm zwraca większy obszar niż Google Maps.
-Rozbieżności między wynikami uzyskanymi przez program a Google Maps mogą wynikac z faktu, że zakładamy poruszanie się z największą dopuszczalną prędkością, a w rzeczywistości poruszamy się wolniej.
+Rozbieżności między wynikami uzyskanymi przez program a Google Maps mogą wynikać z faktu, że zakładamy poruszanie się z największą dopuszczalną prędkością, a w rzeczywistości poruszamy się wolniej.
 Ponadto program nie uwzględnia ograniczeń w ruchu takich jak: zakazy ruchu, zakazy skrętu, rzeczywista kierunkowość dróg (kierunkowość dróg niepozwalająca na przejazd została przez 
 nas nadana jedynie wybranym drogom). Nie mamy również informacji o aktualnym natężeniu ruchu, co znacząco wpływa na czas przejazdu.\\
-Podczas pracy napotkano problemy związane z zbyt długim działaniem programu. Bardzo ważne jest stosowanie struktur danych, które zapewnią odpowiednią złożoność czasową.
+Podczas pracy napotkano problemy związane z zbyt długim działaniem programu. Bardzo ważne jest stosowanie struktur danych, które zapewnią odpowiednią złożoność czasową. 
+Podczas pracy ze zbiorami danych przestrzennych należy zwrócić uwagę na ich spójność. W naszym przypadku zdarzało się, że wierzchołki były oddalone od siebie o znikomą odległość, co powodowało, że
+algorytm działał niepoprawnie. W celu eliminacji tego problemu należało traktować takie wierzchołki jako jeden.\\
+Opracowane rozwiązanie zostało stworzone w sposób, który umożliwia pracę z otrzymanymi danymi pochodzącymi z bazy BDOT. W przyszłości 
+możnaby uczynić je bardziej uniwersalnym, umożliwiającym pracę z danymi z innych źródeł i/lub zawierającymi inne informacje (np. danymi z OSM,
+które nie mają atrybutu \textit{klasaDrogi}). 
+
+
 \section{Referencje}
+[1] Amit Patel, Implementation of A*, redblobgames.com 2020 [dostęp: 8 grudnia 2024]. Dostępny w internecie: \url{https://www.redblobgames.com/pathfinding/a-star/implementation.html}
 \end{document}

@@ -1,6 +1,8 @@
 import math
 from queue import PriorityQueue
 
+
+
 def distance(x1: float, y1: float, x2: float, y2: float) -> float:
     """
     Zwraca odległość między dwoma punktami (x1, y1) i (x2, y2).
@@ -23,50 +25,6 @@ def retrieve_path(prev, a, b):
     path.append(a)
     path.reverse()
     return path
-
-#rozwiązanie na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html
-#zamiast działania na lokalizacji wierzchołków podanych jako para współrzędnych, działamy na obiektach wierzchołków i ich identyfikatorach
-def dijkstra(start_node,goal_node):
-    #dodanie obsługi braku wierzchołków
-    if start_node is None or goal_node is None:
-        raise ValueError("Początkowy lub końcowy węzeł nie istnieje w grafie.")
-    
-    #zrezygnowanie z własnej implementacji kolejki priorytetowej na rzecz PriorityQueue z modułu queue
-    frontier = PriorityQueue()
-    frontier.put((0, start_node))
-
-    came_from = {start_node.id: None}
-    cost_so_far = {start_node.id: 0}
-
-    while not frontier.empty():
-        _, current = frontier.get()
-        
-        if current.id == goal_node.id:
-            break
-        
-        for edge, neighbor in current.get_neighbours():
-            #dodanie obsługi kierunkowości dróg
-            if edge.direction == 0: # Droga jest przejezda w obu kierunkach
-                go = True
-            elif edge.direction == 1 and edge.from_node == current: # Droga jest przejezdna tylko w kierunku  from_node -> to_node
-                go = True
-            elif edge.direction == 2 and edge.to_node == current: # Droga jest przejezdna tylko w kierunku to_node -> from_node
-                go = True
-            else:
-                go = False
-                
-            if go:
-                
-                new_cost = cost_so_far[current.id] + edge.cost_length()
-                
-                
-                if neighbor.id not in cost_so_far or new_cost < cost_so_far[neighbor.id]:
-                    cost_so_far[neighbor.id] = new_cost
-                    priority = new_cost
-                    frontier.put((priority, neighbor))
-                    came_from[neighbor.id] = current.id
-
-    return came_from, cost_so_far
 
 
 def heurystyka(start_node, end_node, option):

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.22)  8 DEC 2024 17:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.22)  8 DEC 2024 20:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -375,97 +375,100 @@ Package hyperref Info: Link coloring OFF on input line 15.
  [1
 
 {C:/Users/julia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
-<img/narzedzie-interfejs-trasa.png, id=128, 244.5135pt x 188.50426pt>
+<img/narzedzie-interfejs-trasa.png, id=121, 244.5135pt x 188.50426pt>
 File: img/narzedzie-interfejs-trasa.png Graphic file (type png)
 <use img/narzedzie-interfejs-trasa.png>
-Package pdftex.def Info: img/narzedzie-interfejs-trasa.png  used on input line 136.
+Package pdftex.def Info: img/narzedzie-interfejs-trasa.png  used on input line 107.
 (pdftex.def)             Requested size: 213.39568pt x 164.52086pt.
- [3]
-<img/glowny-copernicus.png, id=150, 910.602pt x 636.57825pt>
+<img/glowny-copernicus.png, id=123, 910.602pt x 636.57825pt>
 File: img/glowny-copernicus.png Graphic file (type png)
 <use img/glowny-copernicus.png>
-Package pdftex.def Info: img/glowny-copernicus.png  used on input line 144.
+Package pdftex.def Info: img/glowny-copernicus.png  used on input line 115.
 (pdftex.def)             Requested size: 426.79135pt x 298.35646pt.
-<img/glowny-copernicus-google.png, id=151, 922.647pt x 625.1355pt>
+ [3 <./img/narzedzie-interfejs-trasa.png>]
+<img/glowny-copernicus-google.png, id=134, 922.647pt x 625.1355pt>
 File: img/glowny-copernicus-google.png Graphic file (type png)
 <use img/glowny-copernicus-google.png>
-Package pdftex.def Info: img/glowny-copernicus-google.png  used on input line 150.
+Package pdftex.def Info: img/glowny-copernicus-google.png  used on input line 121.
 (pdftex.def)             Requested size: 426.79135pt x 289.16832pt.
- [4 <./img/narzedzie-interfejs-trasa.png> <./img/glowny-copernicus.png>]
-<img/motoarena-rod.png, id=160, 944.328pt x 623.32875pt>
+<img/motoarena-rod.png, id=135, 944.328pt x 623.32875pt>
 File: img/motoarena-rod.png Graphic file (type png)
 <use img/motoarena-rod.png>
-Package pdftex.def Info: img/motoarena-rod.png  used on input line 157.
+Package pdftex.def Info: img/motoarena-rod.png  used on input line 128.
 (pdftex.def)             Requested size: 426.79135pt x 281.71278pt.
-<img/motoarena-rod-google.png, id=161, 886.512pt x 564.30824pt>
+ [4 <./img/glowny-copernicus.png> <./img/glowny-copernicus-google.png>]
+<img/motoarena-rod-google.png, id=144, 886.512pt x 564.30824pt>
 File: img/motoarena-rod-google.png Graphic file (type png)
 <use img/motoarena-rod-google.png>
-Package pdftex.def Info: img/motoarena-rod-google.png  used on input line 163.
+Package pdftex.def Info: img/motoarena-rod-google.png  used on input line 134.
 (pdftex.def)             Requested size: 426.79135pt x 271.67427pt.
- [5 <./img/glowny-copernicus-google.png> <./img/motoarena-rod.png>]
-<img/kierunek-opis.png, id=170, 251.7405pt x 337.86224pt>
+<img/kierunek-opis.png, id=145, 251.7405pt x 337.86224pt>
 File: img/kierunek-opis.png Graphic file (type png)
 <use img/kierunek-opis.png>
-Package pdftex.def Info: img/kierunek-opis.png  used on input line 172.
+Package pdftex.def Info: img/kierunek-opis.png  used on input line 143.
 (pdftex.def)             Requested size: 192.0548pt x 257.76263pt.
-<img/kierunek-orzechowa-truskawkowa.png, id=171, 251.13824pt x 335.45325pt>
+ [5 <./img/motoarena-rod.png> <./img/motoarena-rod-google.png>]
+<img/kierunek-orzechowa-truskawkowa.png, id=154, 251.13824pt x 335.45325pt>
 File: img/kierunek-orzechowa-truskawkowa.png Graphic file (type png)
 <use img/kierunek-orzechowa-truskawkowa.png>
-Package pdftex.def Info: img/kierunek-orzechowa-truskawkowa.png  used on input line 181.
+Package pdftex.def Info: img/kierunek-orzechowa-truskawkowa.png  used on input line 152.
 (pdftex.def)             Requested size: 192.0548pt x 256.5441pt.
-<img/kierunek-truskawkowa-orzechowa.png, id=172, 248.127pt x 333.04425pt>
+<img/kierunek-truskawkowa-orzechowa.png, id=155, 248.127pt x 333.04425pt>
 File: img/kierunek-truskawkowa-orzechowa.png Graphic file (type png)
 <use img/kierunek-truskawkowa-orzechowa.png>
-Package pdftex.def Info: img/kierunek-truskawkowa-orzechowa.png  used on input line 187.
+Package pdftex.def Info: img/kierunek-truskawkowa-orzechowa.png  used on input line 158.
 (pdftex.def)             Requested size: 192.0548pt x 257.78137pt.
- [6 <./img/motoarena-rod-google.png> <./img/kierunek-opis.png>]
-<img/narzedzie-interfejs-zasieg.png, id=181, 247.52475pt x 172.84575pt>
+ [6 <./img/kierunek-opis.png> <./img/kierunek-orzechowa-truskawkowa.png> <./img/kierunek-truskawkowa-orzechowa.png>]
+<img/narzedzie-interfejs-zasieg.png, id=166, 247.52475pt x 172.84575pt>
 File: img/narzedzie-interfejs-zasieg.png Graphic file (type png)
 <use img/narzedzie-interfejs-zasieg.png>
-Package pdftex.def Info: img/narzedzie-interfejs-zasieg.png  used on input line 199.
+Package pdftex.def Info: img/narzedzie-interfejs-zasieg.png  used on input line 170.
 (pdftex.def)             Requested size: 213.39568pt x 149.0163pt.
-<img/rynek-2-min.png, id=182, 672.71326pt x 543.2295pt>
+<img/rynek-2-min.png, id=167, 672.71326pt x 543.2295pt>
 File: img/rynek-2-min.png Graphic file (type png)
 <use img/rynek-2-min.png>
-Package pdftex.def Info: img/rynek-2-min.png  used on input line 207.
+Package pdftex.def Info: img/rynek-2-min.png  used on input line 178.
 (pdftex.def)             Requested size: 426.79135pt x 344.64848pt.
- [7 <./img/kierunek-orzechowa-truskawkowa.png> <./img/kierunek-truskawkowa-orzechowa.png> <./img/narzedzie-interfejs-zasieg.png>]
-<img/umk-1-min.png, id=194, 608.2725pt x 517.935pt>
+<img/umk-1-min.png, id=168, 608.2725pt x 517.935pt>
 File: img/umk-1-min.png Graphic file (type png)
 <use img/umk-1-min.png>
-Package pdftex.def Info: img/umk-1-min.png  used on input line 214.
+Package pdftex.def Info: img/umk-1-min.png  used on input line 185.
 (pdftex.def)             Requested size: 426.79135pt x 363.41344pt.
- [8 <./img/rynek-2-min.png>]
-<img/uniwersytet-15-min.png, id=202, 461.92575pt x 347.49825pt>
+ [7 <./img/narzedzie-interfejs-zasieg.png> <./img/rynek-2-min.png>]
+<img/uniwersytet-15-min.png, id=179, 461.92575pt x 347.49825pt>
 File: img/uniwersytet-15-min.png Graphic file (type png)
 <use img/uniwersytet-15-min.png>
-Package pdftex.def Info: img/uniwersytet-15-min.png  used on input line 223.
+Package pdftex.def Info: img/uniwersytet-15-min.png  used on input line 194.
 (pdftex.def)             Requested size: 192.0548pt x 144.47949pt.
-<img/uniwersytet-15-min-google.png, id=203, 473.3685pt x 349.90726pt>
+<img/uniwersytet-15-min-google.png, id=180, 473.3685pt x 349.90726pt>
 File: img/uniwersytet-15-min-google.png Graphic file (type png)
 <use img/uniwersytet-15-min-google.png>
-Package pdftex.def Info: img/uniwersytet-15-min-google.png  used on input line 229.
+Package pdftex.def Info: img/uniwersytet-15-min-google.png  used on input line 200.
 (pdftex.def)             Requested size: 192.0548pt x 141.96259pt.
- [9 <./img/umk-1-min.png> <./img/uniwersytet-15-min.png> <./img/uniwersytet-15-min-google.png>] [10] (sprawozdanie.aux)
+ [8 <./img/umk-1-min.png> <./img/uniwersytet-15-min.png> <./img/uniwersytet-15-min-google.png>]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 220.
+ (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
+File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+) [9] (sprawozdanie.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `sprawozdanie.out' has not changed.
-(rerunfilecheck)             Checksum: 97A2255FE8A5D7ACD0A2FE5184141BEE;3949.
+(rerunfilecheck)             Checksum: 1625A7DBD18D15D3079226061213A57A;3803.
  ) 
 Here is how much of TeX's memory you used:
- 12522 strings out of 474486
- 203682 string characters out of 5743754
+ 12528 strings out of 474486
+ 204250 string characters out of 5743754
  1941542 words of memory out of 5000000
- 34580 multiletter control sequences out of 15000+600000
- 568320 words of font info for 57 fonts, out of 8000000 for 9000
+ 34599 multiletter control sequences out of 15000+600000
+ 569087 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,799b,599s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk>
-Output written on sprawozdanie.pdf (10 pages, 2683582 bytes).
+ 75i,9n,79p,799b,628s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\julia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk>
+Output written on sprawozdanie.pdf (9 pages, 2689456 bytes).
 PDF statistics:
- 580 PDF objects out of 1000 (max. 8388607)
- 88 named destinations out of 1000 (max. 500000)
- 226 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 585 PDF objects out of 1000 (max. 8388607)
+ 71 named destinations out of 1000 (max. 500000)
+ 218 words of extra memory for PDF output out of 10000 (max. 10000000)
 

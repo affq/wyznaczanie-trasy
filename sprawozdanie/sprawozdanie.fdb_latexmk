@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1733675854.14473 "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1733675857.34885 0
+["pdflatex"] 1733684712.87514 "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1733684718.02996 0
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1733660594 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1000.pk" 1732378637 25420 37f73151666945196448cb0e97013d59 ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1732529317 31952 2a4f14d19ea9f2d4e4eb8e7cd679db7e ""
@@ -9,6 +9,7 @@
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1200.pk" 1732278543 28440 36f3d00bc2534c2ce5bc9521fb89b9d3 ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1728.pk" 1732278544 42516 bf7862011d3f0f78e6a78e5d89d44a99 ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecti1000.pk" 1732543094 31892 f92edd76b2bc3e9492dcd6dd6524c2c5 ""
+  "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ectt1000.pk" 1732379858 20028 fad26782713b02487d89f1010808f46e ""
   "C:/Users/julia/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1732278499 24225047 8433b616a49f63cb4753c6c20b3f9b45 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/ecbx1000.tfm" 993061956 3200 328792ff19833a39406f06fa0555a6dc ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/ecbx1200.tfm" 993061958 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
@@ -19,6 +20,7 @@
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/ecrm1440.tfm" 993062128 3168 3bd7b08ba4330af81521911744311212 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/ecrm1728.tfm" 993062128 3168 11457c8185ce67fb79662ba8b03d6db1 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/ecti1000.tfm" 993062320 2840 5606e1a681c23005308de9d61c09a8ff ""
+  "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/ectt1000.tfm" 993062340 1348 d70ddf2d5d512b838e50a335e385e919 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmex10.tfm" 1136765053 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
@@ -64,6 +66,7 @@
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/base/atveryend-ltx.sty" 1705273579 2462 6bc53756156dbd71c1ad550d30a3b93f ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/base/fontenc.sty" 1705273578 5119 a04a8b68ab4f6ce800a41f7f8012a10e ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/base/size10.clo" 1705273578 8448 dbc0dbf4156c0bb9ba01a1c685d3bad0 ""
+  "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/base/t1cmtt.fd" 1705273578 2443 790016d75def8d3127df5c216a45abcc ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/caption/caption.sty" 1696169587 56128 c2ccf1a29d78c33bc553880402e4fb9a ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/caption/caption3.sty" 1696169587 72619 ee90b6612147680fd73c3b1406a74245 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/caption/subcaption.sty" 1696169587 12494 0c0cdb824278a4d51cefeb2e79901315 ""
@@ -91,7 +94,7 @@
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" 1733675853 16276 68b269228df35ee7019cc50984e81985 ""
+  "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" 1733684712 14871 e64afc6be3320c8220e12fca174494e6 ""
   "img/glowny-copernicus-google.png" 1733659535 747732 621e341663e52b75b98fcca601ee007b ""
   "img/glowny-copernicus.png" 1733659535 570406 0bc388e10c39556395c0aecbcf1a56a0 ""
   "img/kierunek-opis.png" 1733673552 119486 c4c588f87bdfc2c51a58e6e272ac8623 ""
@@ -105,9 +108,9 @@
   "img/umk-1-min.png" 1733659535 141328 fdc87f53c78ece52d388239586ae0b51 ""
   "img/uniwersytet-15-min-google.png" 1733674907 195421 3bdc2324eef3289d032c1735f683610c ""
   "img/uniwersytet-15-min.png" 1733674495 475089 f111557e849ddad56b5b53a3bd9a49d6 ""
-  "sprawozdanie.aux" 1733675857 4982 ba5443d4a87666296d8fb8867a5c6c3b "pdflatex"
-  "sprawozdanie.out" 1733675857 3949 97a2255fe8a5d7acd0a2fe5184141bee "pdflatex"
-  "sprawozdanie.tex" 1733675853 16276 68b269228df35ee7019cc50984e81985 ""
+  "sprawozdanie.aux" 1733684717 4853 35d4a5d9cf2aeb6d455cd09cdcfa443d "pdflatex"
+  "sprawozdanie.out" 1733684717 3803 1625a7dbd18d15d3079226061213a57a "pdflatex"
+  "sprawozdanie.tex" 1733684712 14871 e64afc6be3320c8220e12fca174494e6 ""
   (generated)
   "sprawozdanie.aux"
   "sprawozdanie.log"

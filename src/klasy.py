@@ -39,6 +39,7 @@ class Wierzcholek:
     
     def __repr__(self) -> str:
         return f"Wierzcholek(id={self.id}, x={self.x}, y={self.y})"
+    
 
 class Krawedz:
     def __init__(self, id: int, from_node: Wierzcholek, to_node: Wierzcholek, length: float, road_class: str, direction: str, wkt: str):
