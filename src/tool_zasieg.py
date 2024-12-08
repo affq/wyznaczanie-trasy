@@ -7,7 +7,7 @@ arcpy.env.overwriteOutput = True
 '''
 Parametry do toola:
 0. fc Feature Layer - warstwa z siecią dróg
-1. warstwa_punktowa_zasieg FeatureLayer - warstwa punktowa z jednym obiektem
+1. warstwa_punktowa_zasieg Feature Set - warstwa punktowa z jednym obiektem
 2. travel_time Double - czas w minutach
 '''
 

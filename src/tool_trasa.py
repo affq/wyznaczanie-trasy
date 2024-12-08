@@ -75,7 +75,7 @@ else:
 
 
 if najkrotsza == 'true':
-    came_from_distance, cost_so_far_distance = a_star(graf, start_point, end_point, 'distance')
+    came_from_distance, cost_so_far_distance = a_star(start_point, end_point, 'distance')
     length_a_star_distance = cost_so_far_distance[end_point.id]
     path_distance = retrieve_path(came_from_distance, start_point.id, end_point.id)
 
@@ -91,7 +91,7 @@ if najkrotsza == 'true':
     arcpy.AddMessage(f"Długość trasy: {cost_so_far_distance[end_point.id]/1000} km")
 
 if najszybsza == 'true':
-    came_from_time, cost_so_far_time = a_star(graf, start_point, end_point, 'time')
+    came_from_time, cost_so_far_time = a_star(start_point, end_point, 'time')
     length_a_star_time = cost_so_far_time[end_point.id]
     path_time = retrieve_path(came_from_time, start_point.id, end_point.id)
 

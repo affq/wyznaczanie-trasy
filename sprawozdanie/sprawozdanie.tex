@@ -14,6 +14,9 @@
 
 \begin{document}
 \maketitle
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
 
 \section{Opis ćwiczenia}
 
@@ -23,7 +26,106 @@ Celem ćwiczenia było uruchomienie algorytmów wyznaczania trasy dla sieci drog
 Ćwiczenie zostało wykonane w języku Python z wykorzystaniem biblioteki ArcPy. Do kontroli wersji korzystano z systemu Git. Danymi wejściowymi były dane BDOT dla Torunia i powiatu toruńskiego, udostępnione przez prowadzącego.
 
 \section{Opracowane algorytmy}
-Algorytm został opracowany na podstawie ...
+Algorytm Dijkstry i A* został opracowany na podstawie rozwiązania opublikowanego na stronie redblobgames.com dostepnego pod linkiem: https://www.redblobgames.com/pathfinding/a-star/implementation.html.
+Skorzystano z istniejącego rozwiązania celem zaoszczędzenia czasu i chęci skupienia się na dostosowaniu kodu do postawionych wamagań oraz integracji z oprogramowaniem GIS.
+Użyto innych struktur danych niż w rozwiązaniu internetowym: zamiast bezpośredniego działania na lokalizacjach opisanych jako para współrzędnych, skorzystano z obiektów wierzchołków i ich identyfikatorów.
+Zrezygnowano z implemetacji własnej klasy \textit{PriorityQueue}, zamiast tego skorzystano z kolejki priorytetowej \textit{PriorityQueue} modułu \textit{queue} dostępnego w Pythonie.
+Dodano weryfikację wejściowych wierzchołków w celu upewnienia się, że istnieją w grafie, obsługę kierunkowości dróg i możliwość wyboru kryterium wyznaczania trasy (w algorytmie A*). 
+\subsection{Algorytm Djikstry}
+Algorytm służy do wykrywania najkrótszej ścieżki między dwoma wierzchołkami w grafie. Algorytm działa w następujący sposób:
+\begin{enumerate}
+    \item Inicjalizacja 
+    \begin{enumerate}
+        \item Kolejka priorytetowa \textit{frontier} służy do przechowywania wierzchołków z priorytetami opartymi na kosztach dotarcia do tych nich. Jest inicjalizowana z wierzchołkiem początkowym, a jego priorytet wynosi 0.
+        \item Słowniki \textit{came\_from} oraz \textit{cost\_so\_far} są inicjalizowane jako puste. Przechowują informacje o poprzednikach wierzchołków oraz kosztach dojścia do nich.
+    \end{enumerate}
+    \item Przetwarzanie wierzchołków
+    \begin{enumerate}
+        \item Algorytm działa do momentu, gdy kolejka priorytetowa zostanie opróżniona lub gdy zostanie odnaleziona ścieżka do wierzchołka końcowego.
+        \item W każdej iteracji z kolejki pobierany jest wierzchołek o najniższym priorytecie.
+    \end{enumerate}
+    \item Przetwarzanie sąsiadów danego wierzchołka
+    \begin{enumerate}
+        \item Dla każdego sąsiada aktualnie analizowanego wierzchołka sprawdzane są dostępne krawędzie i ich kierunkowość.
+        \item Jeśli droga jest przejezdna w odpowiednim kierunku, obliczany jest nowy koszt dojścia do węzła sąsiedniego.
+    \end{enumerate}
+    \item Aktualizacja wartości
+    \begin{enumerate}
+        \item Jeśli węzęł - sąsiad nie został jeszcze odwiedzony lub nowo obliczony koszt dotarcia jest mniejszy od kosztu zapisanego w słowniku rejestrowany jest nowy, mniejszy koszt dotarcia.
+        \item Wierzchołek sąsiedni jest dodawany do kolejki priorytetowej z nowym priorytetem. Priorytet jest równy nowemu kosztowi dotarcia do wierzchołka.
+        \item Wierzchołek aktualnie analizowany jest zapisywany jako poprzednik wierzchołka sąsiedniego.
+    \end{enumerate}
+    \item Zakończenie 
+    \begin{enumerate}
+        \item Po zakończeniu algorytmu, zwracane są dwa słowniki: \textit{came\_from} - pozwalający na rekonstrukcję przebiegu ścieżki oraz \textit{cost\_so\_far} - zawierający skumulowane koszty dotarcia do wierzchołków.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Algorytm A*}
+Algorytm A* jest rozszerzeniem algorytmu Dijkstry, który wprowadza heurystykę do szacowania kosztu dotarcia do celu. Dodatkowo umożliwia wyznaczenie kosztu dotarcia do wierzchołka na podstawie długości drogi lub czasu przejazdu.
+Algorytm działa w następujący sposób:
+\begin{enumerate}
+    \item Inicjalizacja 
+    \begin{enumerate}
+        \item Kolejka priorytetowa \textit{frontier} służy do przechowywania wierzchołków z priorytetami opartymi na kosztach dotarcia do tych nich. Jest inicjalizowana z wierzchołkiem początkowym, a jego priorytet wynosi 0.
+        \item Słowniki \textit{came\_from} oraz \textit{cost\_so\_far} są inicjalizowane jako puste. Przechowują informacje o poprzednikach wierzchołków oraz kosztach dojścia do nich.
+    \end{enumerate}
+    \item Przetwarzanie wierzchołków
+    \begin{enumerate}
+        \item Algorytm działa do momentu, gdy kolejka priorytetowa zostanie opróżniona lub gdy zostanie odnaleziona ścieżka do wierzchołka końcowego.
+        \item W każdej iteracji z kolejki pobierany jest wierzchołek o najniższym priorytecie.
+    \end{enumerate}
+    \item Przetwarzanie sąsiadów danego wierzchołka
+    \begin{enumerate}
+        \item Dla każdego sąsiada aktualnie analizowanego wierzchołka sprawdzane są dostępne krawędzie i ich kierunkowość.
+        \item Jeśli droga jest przejezdna w odpowiednim kierunku, obliczany jest nowy koszt dojścia do węzła sąsiedniego.
+        Jest on obliczany w oparciu o długość drogi - w przypadku wyboru opcji \textit{distance} lub czas przejazdu - w przypadku wyboru opcji \textit{time}.
+    \end{enumerate}
+    \item Aktualizacja wartości
+    \begin{enumerate}
+        \item Jeśli węzęł - sąsiad nie został jeszcze odwiedzony lub nowo obliczony koszt dotarcia jest mniejszy od kosztu zapisanego w słowniku rejestrowany jest nowy, mniejszy koszt dotarcia.
+        \item Wierzchołek sąsiedni jest dodawany do kolejki priorytetowej z nowym priorytetem. Priorytet jest sumą kosztu dotarcia do wierzchołka oraz heurystyki.
+        \item Wierzchołek aktualnie analizowany jest zapisywany jako poprzednik wierzchołka sąsiedniego.
+    \end{enumerate}
+    \item Zakończenie 
+    \begin{enumerate}
+        \item Po zakończeniu algorytmu, zwracane są dwa słowniki: \textit{came\_from} - pozwalający na rekonstrukcję przebiegu ścieżki oraz \textit{cost\_so\_far} - zawierający skumulowane koszty dotarcia do wierzchołków.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Funkcja heurystyki}
+Funkcja heurystyki jest wykorzystywana w algorytmie A* do szacowania kosztu dotarcia do celu. 
+Zwraca ona odległość euklidesową lub szacowany czas przejazdu (liczony na podstawie maksymalnej prędkości poruszania się po drogach z uwzględnieniem klas dróg).
+
+\subsection{Algorytm zasięgu}
+Wyznaczenie zasięgu opiera się na funkcji \textit{create\_reachability\_map}, która zwraca wierzchołki osiągalne w zadanym czasie. Funkcja ta działa w następujący sposób:
+\begin{enumerate}
+    \item Inicjalizacja
+    \begin{enumerate}
+        \item Kolejka priorytetowa \textit{frontier} służy do przechowywania wierzchołków z priorytetami opartymi na czasie dotarcia do nich. Jest inicjalizowana z wierzchołkiem początkowym, a jego priorytet wynosi 0.
+        \item Słownik \textit{came\_from} jest inicjalizowany jako pusty. Przechowuje informację o poprzedniku każdego węzła.
+        \item Słownik \textit{time\_to\_reach} zawiera informacje o czasie dotarcia do każdego z odwiedzonych wierzchołków. 
+    \end{enumerate}
+    \item Przetwarzanie wierzchołków
+    \begin{enumerate}
+        \item Algorytm działa do momentu, gdy kolejka priorytetowa zostanie opróżniona.
+        \item Z kolejki pobierany jest węzeł o najniższym priorytecie.
+        \item Jeśli czas dotarcia do wierzchołka jest większy od zadanego czasu, wierzchołek jest pomijany.
+    \end{enumerate}
+    \item Przetwarzanie sąsiadów danego wierzchołka
+    \begin{enumerate}
+        \item Dla każdego wierzchołka - sąsiada sprawdzana jest kierunkowość drogi.
+        \item Jeśli droga jest przejezdna w odpowiednim kierunku, obliczany jest czas dotarcia do sąsiada.
+        \item Jeśli sąsiad nie ma jeszcze przypisanego czasu dotarcia lub nowo obliczony czas jest mniejszy od zapisanego, czas jest aktualizowany.
+        \item Wierzchołek sąsiadni jest dodawany do kolejki priorytetowej z nowym priorytetem.
+        \item W słowniku \textit{came\_from} zapisywany jest obecny węzeł jako poprzednik sąsiada.
+    \end{enumerate}
+    \item Filtracja wyników
+    \begin{enumerate}
+        \item Po zakończeniu przetwarzania, zwracane są wierzchołki, do których można dotrzeć czasie krótszym lub równym zadanemu wraz z informacją o
+        ich poprzednikach.
+    \end{enumerate}
+\end{enumerate}
 
 \section{Integracja z GIS}
 Utworzony program został zintegrowany ze środowiskiem ESRI ArcGIS Pro. Narzędzie w oprogramowaniu pozwala na wyznaczenie trasy pomiędzy dwoma punktami na mapie. 
@@ -62,6 +164,32 @@ Punkty są pobierane z wybranej dwupunktowej warstwy zawierającej punkt począt
     \caption{Trasy proponowane przez Google Maps}
 \end{figure}
 
+\subsection{Przykład 3: Drogi z różną kierunkowością}
+Do zaprezentowania działania algorytmu w zależności od kierunkowości przypisano wybranym ulicom różne wartości atrybuty kierunkowości. Informacje o kierunkowości danej
+drogi przedstawiono na poniższym rysunku.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{img/kierunek-opis.png}
+    \caption{Kierunkowość wybranych dróg}
+\end{figure}
+
+Różnicę w przebiegu trasy najkrótszej dla dwóch punktów zlokalizowanych przy ulicy Orzechowej i Truskawkowej przedstawiono poniżej.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/kierunek-orzechowa-truskawkowa.png}
+        \caption{Trasa gdy punkt początkowy znajduje się przy ulicy Orzechowej}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/kierunek-truskawkowa-orzechowa.png}
+        \caption{Trasa gdy punkt początkowy znajduje się przy ulicy Truskawkowej}
+    \end{subfigure}
+    \caption{Porównanie tras dla puntków przy ulicach Orzechowej i Truskawkowej}
+\end{figure}
+
 \section{Zasięg}
 \subsection{Integracja z GIS}
 Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku 6.
@@ -87,6 +215,28 @@ Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS P
     \caption{Trasy możliwe do pokonania w 1 minutę z punktu startowego przy Bibliotece Uniwesyteckiej}
 \end{figure}
 
+\subsubsection{Przykład 3: Wydział Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/uniwersytet-15-min.png}
+        \caption{Trasy możliwe do pokonania w 15 minut z punktu startowego przy Wydziale Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika według stworzonego narzędzia}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/uniwersytet-15-min-google.png}
+        \caption{Trasy możliwe do pokonania w 15 minut z punktu startowego przy Wydziale Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika według Google Maps}
+    \end{subfigure}
+    \caption{Trasy możliwe do pokonania w 15 minut z punktu startowego przy Wydziale Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika}
+\end{figure}
+
 \section{Wnioski}
+Stworzony algorytm dobrze wyznacza trasę najkrótszą i najszybszą pomiędzy dwoma punktami. W przypadku zasięgu, algorytm zwraca większy obszar niż Google Maps.
+Rozbieżności między wynikami uzyskanymi przez program a Google Maps mogą wynikac z faktu, że zakładamy poruszanie się z największą dopuszczalną prędkością, a w rzeczywistości poruszamy się wolniej.
+Ponadto program nie uwzględnia ograniczeń w ruchu takich jak: zakazy ruchu, zakazy skrętu, rzeczywista kierunkowość dróg (kierunkowość dróg niepozwalająca na przejazd została przez 
+nas nadana jedynie wybranym drogom). Nie mamy również informacji o aktualnym natężeniu ruchu, co znacząco wpływa na czas przejazdu.\\
+Podczas pracy napotkano problemy związane z zbyt długim działaniem programu. Bardzo ważne jest stosowanie struktur danych, które zapewnią odpowiednią złożoność czasową.
 \section{Referencje}
 \end{document}

@@ -24,10 +24,14 @@ def retrieve_path(prev, a, b):
     path.reverse()
     return path
 
-def dijkstra(graph,start_node,goal_node,option):
+#rozwiązanie na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html
+#zamiast działania na lokalizacji wierzchołków podanych jako para współrzędnych, działamy na obiektach wierzchołków i ich identyfikatorach
+def dijkstra(start_node,goal_node):
+    #dodanie obsługi braku wierzchołków
     if start_node is None or goal_node is None:
         raise ValueError("Początkowy lub końcowy węzeł nie istnieje w grafie.")
-        
+    
+    #zrezygnowanie z własnej implementacji kolejki priorytetowej na rzecz PriorityQueue z modułu queue
     frontier = PriorityQueue()
     frontier.put((0, start_node))
 
@@ -41,6 +45,7 @@ def dijkstra(graph,start_node,goal_node,option):
             break
         
         for edge, neighbor in current.get_neighbours():
+            #dodanie obsługi kierunkowości dróg
             if edge.direction == 0: # Droga jest przejezda w obu kierunkach
                 go = True
             elif edge.direction == 1 and edge.from_node == current: # Droga jest przejezdna tylko w kierunku  from_node -> to_node
@@ -51,10 +56,9 @@ def dijkstra(graph,start_node,goal_node,option):
                 go = False
                 
             if go:
-                if option == 'distance':
-                    new_cost = cost_so_far[current.id] + edge.cost_length()
-                else:
-                    new_cost = cost_so_far[current.id] + edge.cost_time()
+                
+                new_cost = cost_so_far[current.id] + edge.cost_length()
+                
                 
                 if neighbor.id not in cost_so_far or new_cost < cost_so_far[neighbor.id]:
                     cost_so_far[neighbor.id] = new_cost
@@ -77,10 +81,14 @@ def heurystyka(start_node, end_node, option):
         time = euklides_distance / speed_m_s
         return time
 
-def a_star(graph, start_node, goal_node, option):
+#rozwiązanie na podstawie https://www.redblobgames.com/pathfinding/a-star/implementation.html
+#zamiast działania na lokalizacji wierzchołków podanych jako para współrzędnych, działamy na obiektach wierzchołków i ich identyfikatorach
+def a_star(start_node, goal_node, option):
+    #dodanie obsługi braku wierzchołków
     if start_node is None or goal_node is None:
         raise ValueError("Początkowy lub końcowy węzeł nie istnieje w grafie.")
     
+    #zrezygnowanie z własnej implementacji kolejki priorytetowej na rzecz PriorityQueue z modułu queue
     frontier = PriorityQueue()
     frontier.put((0, start_node))
     
@@ -94,6 +102,7 @@ def a_star(graph, start_node, goal_node, option):
             break
         
         for edge, neighbor in current.get_neighbours():
+            #dodanie obsługi kierunkowości dróg
             if edge.direction == 0: # Droga jest przejezda w obu kierunkach
                 go = True
             elif edge.direction == 1 and edge.from_node == current: # Droga jest przejezdna tylko w kierunku  from_node -> to_node
@@ -104,6 +113,7 @@ def a_star(graph, start_node, goal_node, option):
                 go = False
                 
             if go:
+                #dodanie obsługi wyboru kryterium liczenia kosztu
                 if option == 'distance':
                     new_cost = cost_so_far[current.id] + edge.cost_length()
                 else:
