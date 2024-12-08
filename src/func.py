@@ -35,7 +35,7 @@ def heurystyka(start_node, end_node, option):
     if option == 'distance':
         return euklides_distance
     else:
-        speed_m_s = road_classes_speed['A'] * 1000 / 3600
+        speed_m_s = road_classes_speed['A'] * 2 * 1000 / 3600
         time = euklides_distance / speed_m_s
         return time
 

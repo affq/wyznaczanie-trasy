@@ -13,6 +13,9 @@ road_classes_speed = {
     "I": 30,
 }
 
+for key in road_classes_speed:
+    road_classes_speed[key] /= 2
+
 class Wierzcholek:
     def __init__(self, id: str, x: float, y: float):
         self.id = id
