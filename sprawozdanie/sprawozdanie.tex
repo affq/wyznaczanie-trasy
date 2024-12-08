@@ -20,7 +20,7 @@
 
 \section{Opis ćwiczenia}
 
-Celem ćwiczenia było uruchomienie algorytmów wyznaczania trasy dla sieci drogowej. W ramach ćwiczenia zaimplementowano algorytmy Djikstry oraz A*. Stworzony program odczytuje sieć drogową z wybranego źródła oraz uruchamia wyznaczanie trasy pomiędzy dwoma punktami, uwzględniając kierunkowość dróg. Następnie zwraca trasę najkrótszą oraz najszybszą. Program zintegrowano z oprogramowaniem GIS - ArcGIS Pro, dzięki czemu użytkownik ma możliwość ręcznego wybrania punktów początkowego i końcowego na mapie. Zaimplementowano również rozszerzenie, pozwalające na wyznaczenie zasięgu obszaru, do którego można dojechać z danego punktu w określonym przez użytkownika czasie.
+Celem ćwiczenia było uruchomienie algorytmów wyznaczania trasy dla sieci drogowej. W ramach ćwiczenia zaimplementowano algorytmy Djikstry oraz A*. Stworzony program odczytuje sieć drogową z wybranego źródła oraz uruchamia wyznaczanie trasy pomiędzy dwoma punktami, uwzględniając kierunkowość dróg. Następnie zwraca trasę najkrótszą oraz najszybszą. Program zintegrowano z oprogramowaniem GIS - ArcGIS Pro, dzięki czemu użytkownik ma możliwość ręcznego wybrania punktów początkowego i końcowego na mapie. Zaimplementowano również rozszerzenie, pozwalające na wyznaczenie zasięgu obszaru, do którego można dojechać z danego punktu w określonym czasie.
 
 \section{Środowisko pracy oraz wykorzystane dane}
 Ćwiczenie zostało wykonane w języku Python z wykorzystaniem biblioteki ArcPy. Do kontroli wersji korzystano z systemu Git. Danymi wejściowymi były dane BDOT dla Torunia i powiatu toruńskiego, udostępnione przez prowadzącego.
@@ -54,7 +54,7 @@ Algorytm działa w następujący sposób:
     \end{enumerate}
     \item Aktualizacja wartości
     \begin{enumerate}
-        \item Jeśli węzęł - sąsiad nie został jeszcze odwiedzony lub nowo obliczony koszt dotarcia jest mniejszy od kosztu zapisanego w słowniku rejestrowany jest nowy, mniejszy koszt dotarcia.
+        \item Jeśli węzeł - sąsiad nie został jeszcze odwiedzony lub nowo obliczony koszt dotarcia jest mniejszy od kosztu zapisanego w słowniku rejestrowany jest nowy, mniejszy koszt dotarcia.
         \item Wierzchołek sąsiedni jest dodawany do kolejki priorytetowej z nowym priorytetem. Priorytet jest sumą kosztu dotarcia do wierzchołka oraz heurystyki.
         \item Wierzchołek aktualnie analizowany jest zapisywany jako poprzednik wierzchołka sąsiedniego.
     \end{enumerate}
@@ -65,8 +65,7 @@ Algorytm działa w następujący sposób:
 \end{enumerate}
 
 \subsection{Funkcja heurystyki}
-Funkcja heurystyki jest wykorzystywana w algorytmie A* do szacowania kosztu dotarcia do celu. 
-Zwraca ona odległość euklidesową lub szacowany czas przejazdu (liczony na podstawie maksymalnej prędkości poruszania się po drogach z uwzględnieniem klas dróg).
+Funkcja heurystyki jest wykorzystywana w algorytmie A* do szacowania kosztu dotarcia do celu. Aby zachować poprawne działanie i optymistyczny charakter, funkcja heurystyki nie może przeszacowywać kosztu dotarcia do celu. W naszym przypadku funkcję heurystyki zdefiniowano więc jako odległość euklidesową między dwoma punktami w przypadku wyszukiwania trasy najkrótszej oraz jako czas przejazdu między dwoma punktami w przypadku wyszukiwania trasy najszybszej, zakładając prędkość ruchu równą 140 km/h, co odpowiada limitowi prędkości na autostradzie.
 
 \subsection{Algorytm zasięgu}
 Wyznaczenie zasięgu opiera się na funkcji \textit{create\_reachability\_map}, która zwraca wierzchołki osiągalne w zadanym czasie. Funkcja ta działa w następujący sposób:
@@ -109,7 +108,11 @@ Punkty są pobierane z wybranej dwupunktowej warstwy zawierającej punkt począt
 \end{figure}
 
 \section{Przykłady działania algorytmu wyznaczającego trasy}
+Dla kilku przykładowych tras punktów początkowych i startowych przeprowadzono analizę działania algorytmu wyznaczającego trasy. Porównano wyniki z trasami proponowanymi przez Google Maps.
+
 \subsection{Przykład 1: Dworzec Główny - Galeria Copernicus}
+Długość najkrótszej trasy wyniosła w stworzonym narzędziu 5.832 km, a czas przejazdu najszybszą trasą wyniósł 5 minut. Najszybsza trasa proponowana przez Google Maps była wolniejsza o 5 minut. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/glowny-copernicus.png}
@@ -123,6 +126,8 @@ Punkty są pobierane z wybranej dwupunktowej warstwy zawierającej punkt począt
 \end{figure}
 
 \subsection{Przykład 2: Motoarena - ROD Zielone Wzgórze}
+Długość najkrótszej trasy wyniosła w stworzonym narzędziu 13.034 km, a czas przejazdu najszybszą trasą wyniósł 10 minut. Najszybsza trasa proponowana przez Google Maps różniła się od tej wyznaczonej przez stworzone narzędzie - najszybszy przejazd według Google Maps zająłby 20 minut.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/motoarena-rod.png}
@@ -136,7 +141,7 @@ Punkty są pobierane z wybranej dwupunktowej warstwy zawierającej punkt począt
 \end{figure}
 
 \subsection{Przykład 3: Drogi z różną kierunkowością}
-Do zaprezentowania działania algorytmu w zależności od kierunkowości przypisano wybranym ulicom różne wartości atrybutu, który ją określa. Informacje o kierunkowości danej
+Do zaprezentowania działania algorytmu w zależności od kierunkowości przypisano wybranym ulicom różne wartości atrybuty kierunkowości. Informacje o kierunkowości danej
 drogi przedstawiono na poniższym rysunku.
 \begin{figure}[H]
     \centering
@@ -158,12 +163,17 @@ Różnicę w przebiegu trasy najkrótszej dla dwóch punktów zlokalizowanych pr
         \includegraphics[width=\textwidth]{img/kierunek-truskawkowa-orzechowa.png}
         \caption{Trasa gdy punkt początkowy znajduje się przy ulicy Truskawkowej}
     \end{subfigure}
-    \caption{Porównanie przeviegu trasy w zależności od kierunkowości dróg}
+    \caption{Porównanie tras dla punktów przy ulicach Orzechowej i Truskawkowej}
 \end{figure}
+
+\subsection{Zmiany w prędkości}
+Po przeanalizowaniu kilku przykładów zauważono, że różnice w czasie przejazdu między trasami wyznaczonymi przez stworzone narzędzie a trasami proponowanymi przez Google Maps są duże - stworzone narzędzie zwracało krótsze blisko o połowę czasy przejazdu. Aby uzyskać czas przejazdu bardziej podobny do rzeczywistego, zdecydowano się zmniejszyć prędkość ruchu dla każdej z kategorii dróg o połowę. Było to rozwiązanie, które bardziej uwzględniło istnienie czynników spowalniających ruch. Po zmianie prędkości, różnice w czasie przejazdu między trasami wyznaczonymi przez stworzone narzędzie a trasami proponowanymi przez Google Maps były mniejsze.
+
+Dla przykładu 1, czas przejazdu najszybszą trasą zwiększył się z 5 do 10 minut, a dla przykładu 2 - z 10 do 19 minut.
 
 \section{Zasięg}
 \subsection{Integracja z GIS}
-Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku poniżej.
+Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku 6.
 
 \begin{figure}[H]
     \centering
@@ -172,18 +182,19 @@ Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS P
 \end{figure}
 
 \subsection{Przykłady działania}
-\subsubsection{Przykład 1: Rynek Staromiejski}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/rynek-2-min.png}
-    \caption{Trasy możliwe do pokonania w 2 minuty z punktu startowego na Rynku Staromiejskim}
-\end{figure}
-
-\subsubsection{Przykład 2: Biblioteka Uniwersytecka}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{img/umk-1-min.png}
-    \caption{Trasy możliwe do pokonania w 1 minutę z punktu startowego przy Bibliotece Uniwesyteckiej}
+    \begin{subfigure}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/rynek-2-min.png}
+        \caption*{Trasy możliwe do pokonania w 2 minuty z punktu startowego na Rynku Staromiejskim}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.55\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/umk-7-min.png}
+        \caption*{Trasy możliwe do pokonania w 7 minut z punktu startowego przy Bibliotece Uniwesyteckiej}
+    \end{subfigure}
 \end{figure}
 
 \subsubsection{Przykład 3: Wydział Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika}
@@ -205,16 +216,15 @@ Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS P
 
 \section{Wnioski}
 Stworzony algorytm dobrze wyznacza trasę najkrótszą i najszybszą pomiędzy dwoma punktami. W przypadku zasięgu, algorytm zwraca większy obszar niż Google Maps.
-Rozbieżności między wynikami uzyskanymi przez program a Google Maps mogą wynikać z faktu, że zakładamy poruszanie się z największą dopuszczalną prędkością, a w rzeczywistości poruszamy się wolniej.
-Ponadto program nie uwzględnia ograniczeń w ruchu takich jak: zakazy ruchu, zakazy skrętu, rzeczywista kierunkowość dróg (kierunkowość dróg niepozwalająca na przejazd została przez 
+Początkowe rozbieżności między wynikami uzyskanymi przez program a Google Maps wynikały z faktu, że zakładaliśmy poruszanie się z największą dopuszczalną prędkością, a w rzeczywistości poruszamy się wolniej.
+Program nie uwzględnia ograniczeń w ruchu takich jak: zakazy ruchu, zakazy skrętu, rzeczywista kierunkowość dróg (kierunkowość dróg niepozwalająca na przejazd została przez 
 nas nadana jedynie wybranym drogom). Nie mamy również informacji o aktualnym natężeniu ruchu, co znacząco wpływa na czas przejazdu.\\
 Podczas pracy napotkano problemy związane z zbyt długim działaniem programu. Bardzo ważne jest stosowanie struktur danych, które zapewnią odpowiednią złożoność czasową. 
-Podczas pracy ze zbiorami danych przestrzennych należy zwrócić uwagę na ich spójność. W naszym przypadku zdarzało się, że wierzchołki były oddalone od siebie o znikomą odległość, co powodowało, że
-algorytm działał niepoprawnie. W celu eliminacji tego problemu należało traktować takie wierzchołki jako jeden.\\
+Podczas pracy ze zbiorami danych przestrzennych należy zwrócić uwagę na ich spójność. W naszym przypadku zdarzało się, że wierzchołki były oddalone od siebie o znikomą odległość, co powodowało, że algorytm działał niepoprawnie. W celu eliminacji tego problemu należało traktować takie wierzchołki jako jeden.\\
 Opracowane rozwiązanie zostało stworzone w sposób, który umożliwia pracę z otrzymanymi danymi pochodzącymi z bazy BDOT. W przyszłości 
 możnaby uczynić je bardziej uniwersalnym, umożliwiającym pracę z danymi z innych źródeł i/lub zawierającymi inne informacje (np. danymi z OSM,
 które nie mają atrybutu \textit{klasaDrogi}). 
-
+Używanie w heurystyce największej możliwej prędkości poruszania się powoduje, że algorytm analizuje więcej dróg. To sprawia że czas wyznaczenia trasy najszybszej jest dłuższy od czasu wyznaczenia trasy najkrótszej.
 
 \section{Referencje}
 [1] Amit Patel, Implementation of A*, redblobgames.com 2020 [dostęp: 8 grudnia 2024]. Dostępny w internecie: \url{https://www.redblobgames.com/pathfinding/a-star/implementation.html}
