@@ -30,7 +30,7 @@ Algorytm A* został opracowany na podstawie rozwiązania opublikowanego na stron
 Skorzystano z istniejącego rozwiązania celem zaoszczędzenia czasu i chęci skupienia się na dostosowaniu kodu do postawionych wamagań oraz integracji z oprogramowaniem GIS.
 Użyto innych struktur danych niż w rozwiązaniu internetowym: zamiast bezpośredniego działania na lokalizacjach opisanych jako para współrzędnych, skorzystano z obiektów wierzchołków i ich identyfikatorów.
 Zrezygnowano z implemetacji własnej klasy \textit{PriorityQueue}, zamiast tego skorzystano z kolejki priorytetowej \textit{PriorityQueue} modułu \textit{queue} dostępnego w Pythonie.
-Dodano weryfikację wejściowych wierzchołków w celu upewnienia się, że istnieją w grafie, obsługę kierunkowości dróg i możliwość wyboru kryterium wyznaczania trasy (w algorytmie A*). 
+Dodano weryfikację wejściowych wierzchołków w celu upewnienia się, że istnieją w grafie, obsługę kierunkowości dróg i możliwość wyboru kryterium wyznaczania trasy. 
 
 \subsection{Algorytm A*}
 Algorytm A* jest rozszerzeniem algorytmu Dijkstry, który wprowadza heurystykę do szacowania kosztu dotarcia do celu. Dodatkowo uwzględnia kierunkowośc dróg i umożliwia wyznaczenie kosztu dotarcia do wierzchołka na podstawie długości drogi lub czasu przejazdu.
@@ -215,7 +215,7 @@ Najkrótsza & 2,61 \\
 
 \section{Zasięg}
 \subsection{Integracja z GIS}
-Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku 6.
+Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku 8.
 
 \begin{figure}[H]
     \centering
