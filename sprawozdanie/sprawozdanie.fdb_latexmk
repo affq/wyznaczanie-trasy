@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1733693397.48597 "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1733693401.17436 0
+["pdflatex"] 1733693612.60068 "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1733693617.40665 0
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1733660594 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1732529317 31952 2a4f14d19ea9f2d4e4eb8e7cd679db7e ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk" 1732278541 40136 9ad2336e5fa193cf9fc30e67701df123 ""
@@ -94,7 +94,7 @@
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" 1733693396 18934 dbb4b776688c3a84622e7a8f96e68647 ""
+  "c:/Users/julia/OneDrive/Pulpit/pag-2/pag-2/sprawozdanie/sprawozdanie.tex" 1733693611 18952 b10161d1274990476945c693b45f5884 ""
   "img/glowny-copernicus-google.png" 1733659535 747732 621e341663e52b75b98fcca601ee007b ""
   "img/glowny-copernicus.png" 1733659535 570406 0bc388e10c39556395c0aecbcf1a56a0 ""
   "img/kierunek-opis.png" 1733673552 119486 c4c588f87bdfc2c51a58e6e272ac8623 ""
@@ -108,9 +108,9 @@
   "img/umk-7-min.png" 1733691233 483466 263fc6d2d0e04979e445e029dacfcd98 ""
   "img/uniwersytet-15-min-google.png" 1733674907 195421 3bdc2324eef3289d032c1735f683610c ""
   "img/uniwersytet-15-min.png" 1733692169 276413 faf2000cf4d504806a1963221d2ad232 ""
-  "sprawozdanie.aux" 1733693400 4714 92b9fa577ae3c89d1d366a7e29fbfced "pdflatex"
-  "sprawozdanie.out" 1733693400 3126 d1b2ba4e51aaaef0d6fa1c3c437429c6 "pdflatex"
-  "sprawozdanie.tex" 1733693396 18934 dbb4b776688c3a84622e7a8f96e68647 ""
+  "sprawozdanie.aux" 1733693617 4714 92b9fa577ae3c89d1d366a7e29fbfced "pdflatex"
+  "sprawozdanie.out" 1733693617 3126 d1b2ba4e51aaaef0d6fa1c3c437429c6 "pdflatex"
+  "sprawozdanie.tex" 1733693611 18952 b10161d1274990476945c693b45f5884 ""
   (generated)
   "sprawozdanie.aux"
   "sprawozdanie.log"
