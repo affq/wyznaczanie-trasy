@@ -20,7 +20,7 @@
 
 \section{Opis ćwiczenia}
 
-Celem ćwiczenia było uruchomienie algorytmów wyznaczania trasy dla sieci drogowej. W ramach ćwiczenia zaimplementowano algorytmy Djikstry oraz A*. Stworzony program odczytuje sieć drogową z wybranego źródła oraz uruchamia wyznaczanie trasy pomiędzy dwoma punktami, uwzględniając kierunkowość dróg. Następnie zwraca trasę najkrótszą oraz najszybszą. Program zintegrowano z oprogramowaniem GIS - ArcGIS Pro, dzięki czemu użytkownik ma możliwość ręcznego wybrania punktów początkowego i końcowego na mapie. Zaimplementowano również rozszerzenie, pozwalające na wyznaczenie zasięgu obszaru, do którego można dojechać z danego punktu w określonym czasie.
+Celem ćwiczenia było uruchomienie algorytmów wyznaczania trasy dla sieci drogowej. W ramach ćwiczenia zaimplementowano algorytm A*. Stworzony program odczytuje sieć drogową z wybranego źródła oraz uruchamia wyznaczanie trasy pomiędzy dwoma punktami, uwzględniając kierunkowość dróg. Następnie zwraca trasę najkrótszą oraz najszybszą. Program zintegrowano z oprogramowaniem GIS - ArcGIS Pro, dzięki czemu użytkownik ma możliwość ręcznego wybrania punktów początkowego i końcowego na mapie. Zaimplementowano również rozszerzenie, pozwalające na wyznaczenie zasięgu obszaru, do którego można dojechać z danego punktu w określonym czasie.
 
 \section{Środowisko pracy oraz wykorzystane dane}
 Ćwiczenie zostało wykonane w języku Python z wykorzystaniem biblioteki ArcPy. Do kontroli wersji korzystano z systemu Git. Danymi wejściowymi były dane BDOT dla Torunia i powiatu toruńskiego, udostępnione przez prowadzącego.
@@ -112,6 +112,7 @@ Dla kilku przykładowych tras punktów początkowych i startowych przeprowadzono
 
 \subsection{Przykład 1: Dworzec Główny - Galeria Copernicus}
 Długość najkrótszej trasy wyniosła w stworzonym narzędziu 5.832 km, a czas przejazdu najszybszą trasą wyniósł 5 minut. Najszybsza trasa proponowana przez Google Maps była wolniejsza o 5 minut. 
+Przebieg tras wyznaczonych przez stworzone narzędzie oraz Google Maps przedstawiono na poniższych rysunkach.
 
 \begin{figure}[H]
     \centering
@@ -127,6 +128,7 @@ Długość najkrótszej trasy wyniosła w stworzonym narzędziu 5.832 km, a czas
 
 \subsection{Przykład 2: Motoarena - ROD Zielone Wzgórze}
 Długość najkrótszej trasy wyniosła w stworzonym narzędziu 13.034 km, a czas przejazdu najszybszą trasą wyniósł 10 minut. Najszybsza trasa proponowana przez Google Maps różniła się od tej wyznaczonej przez stworzone narzędzie - najszybszy przejazd według Google Maps zająłby 20 minut.
+Przebieg tras wyznaczonych przez stworzone narzędzie oraz Google Maps przedstawiono na poniższych rysunkach.
 
 \begin{figure}[H]
     \centering
@@ -141,6 +143,14 @@ Długość najkrótszej trasy wyniosła w stworzonym narzędziu 13.034 km, a cza
 \end{figure}
 
 \subsection{Przykład 3: Drogi z różną kierunkowością}
+Kierunkowośc jest opisywana następująco:
+\begin{itemize}
+    \item 0 - droga przejezdna w obu kierunkach
+    \item 1 - droga przejezdna tylko w kierunku zgodnym z geometrią
+    \item 2 - droga przejezdna tylko w kierunku przeciwnym do geometrii
+    \item 3 - droga nieprzejezdna
+\end{itemize}
+
 Do zaprezentowania działania algorytmu w zależności od kierunkowości przypisano wybranym ulicom różne wartości atrybuty kierunkowości. Informacje o kierunkowości danej
 drogi przedstawiono na poniższym rysunku.
 \begin{figure}[H]
@@ -171,6 +181,38 @@ Po przeanalizowaniu kilku przykładów zauważono, że różnice w czasie przeja
 
 Dla przykładu 1, czas przejazdu najszybszą trasą zwiększył się z 5 do 10 minut, a dla przykładu 2 - z 10 do 19 minut.
 
+\subsection{Czas działania}
+Porównano czas wyznaczania danego rodzaju trasy i zauważono, że we wszystkich przypadkach czas wyznaczania trasy najszybszej jest dłuższy niż czas wyznaczania trasy najkrótszej.
+Różnice nie były duże, ale zauważalne. W poniższych tabelach przedstawiono dokładne wartości liczbowe dla dwóch wybranych, wcześniej wizualizowanych przykładów.\\
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Rodzaj trasy & Czas wyznaczania [s] \\
+\hline
+Najszybsza & 2,67 \\
+\hline
+Najkrótsza & 2,27 \\
+\hline
+\end{tabular}
+\caption{Czas wyznaczania tras dla przykładu Dworzec Główny - Galeria Copernicus}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Rodzaj trasy & Czas wyznaczania [s] \\
+\hline
+Najszybsza & 2,93 \\
+\hline
+Najkrótsza & 2,61 \\
+\hline
+\end{tabular}
+\caption{Czas wyznaczania tras dla przykładu Motoarena - ROD Zielone Wzgórze}
+\end{table}
+
 \section{Zasięg}
 \subsection{Integracja z GIS}
 Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS Pro. Użytkownik ma możliwość wybrania punktu początkowego na mapie, a następnie określenia czasu, w jakim chce dojechać do punktów z zasięgu. Program zwraca obszar, do którego można dojechać w wybranym czasie. Interfejs narzędzia został zaprezentowany na rysunku 6.
@@ -182,22 +224,26 @@ Program do wyznaczania zasięgu również zintegrowano ze środowiskiem ArcGIS P
 \end{figure}
 
 \subsection{Przykłady działania}
+Poniżej przedstawiono przykładowe zasięgi dla punktów początkowych zlokalizowanych na Rynku Staromiejskim i przy Bibliotece Uniwersyteckiej. Zasięgi zostały wyznaczone dla czasów 2 oraz 7 minut.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{img/rynek-2-min.png}
-        \caption*{Trasy możliwe do pokonania w 2 minuty z punktu startowego na Rynku Staromiejskim}
+        \caption{Trasy możliwe do pokonania w 2 minuty z punktu startowego na Rynku Staromiejskim}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.55\textwidth}
         \centering
         \includegraphics[width=\textwidth]{img/umk-7-min.png}
-        \caption*{Trasy możliwe do pokonania w 7 minut z punktu startowego przy Bibliotece Uniwesyteckiej}
+        \caption{Trasy możliwe do pokonania w 7 minut z punktu startowego przy Bibliotece Uniwesyteckiej}
     \end{subfigure}
+    \caption{Przykładowe zasięgi}
 \end{figure}
 
-\subsubsection{Przykład 3: Wydział Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika}
+%\subsubsection{Przykład 3: Wydział Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika}
+Poniżej przedstawiono zasięg dla punktu początkowego zlokalizowanego przy Wydziale Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika wyznaczony przez stworzone
+narzędzie oraz przez Google Maps. Maksymalny czas dojazdu wynosił 15 minut.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
@@ -224,7 +270,7 @@ Podczas pracy ze zbiorami danych przestrzennych należy zwrócić uwagę na ich 
 Opracowane rozwiązanie zostało stworzone w sposób, który umożliwia pracę z otrzymanymi danymi pochodzącymi z bazy BDOT. W przyszłości 
 możnaby uczynić je bardziej uniwersalnym, umożliwiającym pracę z danymi z innych źródeł i/lub zawierającymi inne informacje (np. danymi z OSM,
 które nie mają atrybutu \textit{klasaDrogi}). 
-Używanie w heurystyce największej możliwej prędkości poruszania się powoduje, że algorytm analizuje więcej dróg. To sprawia że czas wyznaczenia trasy najszybszej jest dłuższy od czasu wyznaczenia trasy najkrótszej.
+Używanie w funkcji heurystki największej możliwej prędkości poruszania się, powoduje, że algorytm analizuje więcej dróg. To sprawia że czas wyznaczenia trasy najszybszej jest dłuższy od czasu wyznaczenia trasy najkrótszej.
 
 \section{Referencje}
 [1] Amit Patel, Implementation of A*, redblobgames.com 2020 [dostęp: 8 grudnia 2024]. Dostępny w internecie: \url{https://www.redblobgames.com/pathfinding/a-star/implementation.html}
