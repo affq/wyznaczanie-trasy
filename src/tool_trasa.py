@@ -6,13 +6,13 @@ arcpy.env.overwriteOutput = True
 
 '''
 Parametry do toola:
-0. warstwa_punktowa FeatureLayer - warstwa punktowa zawierająca dwa punkty - start i end
-1. fc FeatureLayer - warstwa z siecią dróg
+0. warstwa_punktowa Feature Set - warstwa punktowa zawierająca dwa punkty - start i end
+1. fc Feature Layer - warstwa z siecią dróg
 2. najkrotsza Boolean - jeśli true to tworzy się najkrótsza trasa
 3. najszybsza Boolean - jeśli true to tworzy się najszybsza trasa
 '''
 
-warstwa_punktowa = arcpy.GetParameterAsText(0)
+warstwa_punktowa = arcpy.GetParameter(0)
 fc = arcpy.GetParameterAsText(1)
 spatial_reference = arcpy.Describe(fc).spatialReference
 najkrotsza = arcpy.GetParameterAsText(2)
@@ -52,10 +52,12 @@ with arcpy.da.SearchCursor(fc, ['OID@', 'SHAPE@', 'klasaDrogi', 'kierunek']) as 
         edge = Krawedz(edge_id, start, end, length, road_class, direction, geometry)
         graf.add_edge(edge)
         
-with arcpy.da.SearchCursor(warstwa_punktowa, ['SHAPE@X','SHAPE@Y']) as cursor:
+with arcpy.da.SearchCursor(warstwa_punktowa, ['SHAPE@X','SHAPE@Y', 'SHAPE@']) as cursor:
     arcpy.AddMessage(cursor)
     points = []
     for row in cursor:
+        if row[2].type != "point":
+            raise Exception("Warstwa punktowa powinna zawierać tylko punkty!")
         x, y = row[0], row[1]
         points.append((x,y))
 
@@ -69,8 +71,7 @@ if len(points) == 2:
     arcpy.AddMessage(f"Start Point: {start_point}")
     arcpy.AddMessage(f"End Point: {end_point}")
 else:
-    arcpy.AddMessage("W warstwie punktowej powinny znajdować się 2 punkty!")
-    exit()
+    raise Exception("Warstwa punktowa powinna zawierać dokładnie dwa punkty!")
 
 
 if najkrotsza == 'true':
