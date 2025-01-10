@@ -1,12 +1,20 @@
 from neo4j import GraphDatabase
 import geopandas as gpd
-driver = GraphDatabase.driver("neo4j+s://260dfa0b.databases.neo4j.io", auth=("neo4j","4xELGnGYvcUlQ-lcwOeqPPv_O1sgDuAHFUMFpJMLzZA"))
+
+with open ("neo4j/credentials.txt", "r") as file:
+    lines = file.readlines()
+    uri = lines[0].strip()
+    user = lines[1].strip()
+    password = lines[2].strip()
+
+driver = GraphDatabase.driver(uri, auth=(user, password))
+
 session = driver.session()
 # query = 'CREATE (m:Miasto {nazwa:"Warszawa"}) RETURN m;'
 # session.run(query)
 # session.close()
 
-shp = "C:\studia\sem5\Pag\skjz\direction_calosc_0.shp"
+shp = "skjz\direction_calosc_0.shp"
 gdf = gpd.read_file(shp)
 print(gdf.head())
 
