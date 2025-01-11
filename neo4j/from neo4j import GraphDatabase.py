@@ -8,15 +8,7 @@ with open ("neo4j/credentials.txt", "r") as file:
     password = lines[2].strip()
 
 driver = GraphDatabase.driver(uri, auth=(user, password))
-
 session = driver.session()
-# query = 'CREATE (m:Miasto {nazwa:"Warszawa"}) RETURN m;'
-# session.run(query)
-# session.close()
-
-shp = "skjz\direction_calosc_0.shp"
-gdf = gpd.read_file(shp)
-print(gdf.head())
 
 road_classes_speed = {
     "A": 140,
@@ -31,7 +23,10 @@ road_classes_speed = {
 
 for key in road_classes_speed:
     road_classes_speed[key] /= 2
-    
+
+shp = "skjz\direction_calosc_0.shp"
+gdf = gpd.read_file(shp)
+
 with driver.session() as session:
     for idx,row in gdf.iterrows():
         length = row.geometry.length
@@ -49,22 +44,22 @@ with driver.session() as session:
         time = length/(road_class_speed * 1000 / 3600)
         direction = row['kierunek']
         
-        query = f"""
-            CREATE (n:Node {{id:'{str(int(x1))+","+str(int(y1))}', location:point({{x:{x1}, y: {y1}}})}})
-            WITH n
-            CREATE (m:Node {{id:'{str(int(x2))+","+str(int(y2))}', location:point({{x:{x2}, y: {y2}}})}})
-            WITH n, m
-            """
+        # query = f"""
+        #     CREATE (n:Node {{id: apoc.util.md5([{x1}, {y1}]), location:point({{x:{x1}, y: {y1}}})}})
+        #     WITH n
+        #     CREATE (m:Node {{id: apoc.util.md5([{x2}, {y2}]), location:point({{x:{x2}, y: {y2}}})}})
+        #     WITH n, m
+        #     """
+
+        query = f"match (n:Node {{id: apoc.util.md5([{x1}, {y1}])}}), (m:Node {{id: apoc.util.md5([{x2}, {y2}])}})"
         
-        if direction == "0":
-            query += f'create (n)-[:CONNECTED_TO {{edge_id:{edge_id}, length:{length}, time{time}}}]-(m);'
-        elif direction == "1":
-            query += f'create (n)-[:CONNECTED_TO {{edge_id:{edge_id}, length:{length}, time{time}}}]->(m);'
-        elif direction == "2":
-            query += f'create (n)<-[:CONNECTED_TO {{edge_id:{edge_id}, length:{length}, time{time}}}]-(m);'
-        
+        if direction == 0:
+            query += f'create (n)-[:CONNECTED_TO {{edge_id:{edge_id}, length:{length}, time: {time}}}]-(m);'
+        elif direction == 1:
+            query += f'create (n)-[:CONNECTED_TO {{edge_id:{edge_id}, length:{length}, time: {time}}}]->(m);'
+        elif direction == 2:
+            query += f'create (n)<-[:CONNECTED_TO {{edge_id:{edge_id}, length:{length}, time: {time}}}]-(m);'
         query += " RETURN n, m;"
         session.run(query)
-        
 
 session.close()
